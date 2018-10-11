@@ -22,11 +22,12 @@ s1 = 'Hello, world'
 s2 = 'Hello, \'Adam\''# 字符
 s3 = r'Hello, "Bart"'
 s4 = 'i\'m "ok"'
-print(n, f, s1, s2, s3, s4)
+print(n, f, s1, s2, s3, s5)
+
 
 a = 'ABC'
 b = a
-a = 'pi'    #赋值
+a = 'pi'    #赋值 这里的运算和数学的运算是不一样的》！！！！ 这里是吧b指向a指向的字符
 
 print(b)
 print(a)
