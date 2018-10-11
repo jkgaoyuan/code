@@ -22,8 +22,9 @@ s1 = 'Hello, world'
 s2 = 'Hello, \'Adam\''# 字符
 s3 = r'Hello, "Bart"'
 s4 = 'i\'m "ok"'
-print(n, f, s1, s2, s3, s5)
-
+s5 = r'''Hello,
+Lisa!'''
+print(n,'\n',f,'\n',s1,'\n',s2,'\n',s3,'\n',s5,)
 
 a = 'ABC'
 b = a
