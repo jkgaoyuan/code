@@ -16,19 +16,26 @@
 #         odd.append(number)
 #         print('odd=', odd)
 #
-n = 123
-f = 456.789
-s1 = 'Hello, world'
-s2 = 'Hello, \'Adam\''# 字符
-s3 = r'Hello, "Bart"'
-s4 = 'i\'m "ok"'
-s5 = r'''Hello,
-Lisa!'''
-print(n,'\n',f,'\n',s1,'\n',s2,'\n',s3,'\n',s5,)
+# n = 123
+# f = 456.789
+# s1 = 'Hello, world'
+# s2 = 'Hello, \'Adam\''# 字符
+# s3 = r'Hello, "Bart"'
+# s4 = 'i\'m "ok"'
+# s5 = r'''Hello,
+# Lisa!'''
+# print(n,'\n',f,'\n',s1,'\n',s2,'\n',s3,'\n',s4,'\n',s5,)#
 
-a = 'ABC'
-b = a
-a = 'pi'    #赋值 这里的运算和数学的运算是不一样的》！！！！ 这里是吧b指向a指向的字符
 
-print(b)
-print(a)
+# a = 'ABC'
+# b = a
+# a = 'pi'    #赋值 这里的运算和数学的运算是不一样的》！！！！ 这里是吧b指向a指向的字符
+#
+# print(b)
+# print(a)
+
+b1 = 72
+b2 = 85
+r = (b2-b1)/b1*100
+print('小明成绩提升的百分点 %.1f%%' % r)
+print('%.1f%%' % r) #这里 用%%来表示一个%
