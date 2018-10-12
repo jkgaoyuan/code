@@ -77,10 +77,20 @@
 #         continue # continue语句会直接继续下一轮循环，后续的print()语句不会执行
 #     print(n)        #也就说满足if语句后continue之后的语句是不执行的
 #写出一个死循环
-i = 0
-# i = i + 1
-if i < 0:
-    print(i)
-else:
-    print('erro')
-
+# i = 0
+# # i = i + 1
+# if i < 0:
+#     print(i)
+# else:
+#     print('erro')
+#
+#使用list和tuple 有序列表 :tumple 不可变 list 可变
+#请用索引取出下面list的指定元素： Apple:Python: Lisa
+L = [
+    ['Apple', 'Google', 'Microsoft'],
+    ['Java', 'Python', 'Ruby', 'PHP'],
+    ['Adam', 'Bart', 'Lisa']
+]
+# B = L[0]
+# print(B[0])
+print(L[0][0],L[1][1],L[-1][-1])
