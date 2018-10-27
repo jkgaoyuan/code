@@ -33,7 +33,7 @@
 #
 # print(b)
 # print(a)
-# #
+#
 # b1 = 72
 # b2 = 85
 # r = (b2-b1)/b1*100
@@ -129,7 +129,8 @@ H = 1.75
 W = 80.5
 #BMI = W/pow(H,2) #平方的写法
 BMI = W/(H*H)
-print('BMI=',BMI)
+BMI
+print('BMI=%.1f' % BMI)
 if BMI<=18.5:
     print('过轻')
 elif 18.5<BMI<=25:
