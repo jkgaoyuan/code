@@ -125,19 +125,39 @@
 # # 28-32：肥胖
 # # 高于32：严重肥胖
 # # 用if-elif判断并打印结果：
-H = 1.75
-W = 80.5
-#BMI = W/pow(H,2) #平方的写法
-BMI = W/(H*H)
-BMI
-print('BMI=%.1f' % BMI)
-if BMI<=18.5:
-    print('过轻')
-elif 18.5<BMI<=25:
-    print('正常')
-elif 25<BMI<28:
-    print('过重')
-elif 28<BMI<=32:
-    print('肥胖')
-else :
-    print('严重肥胖')
+# H = 1.75
+# W = 80.5
+# #BMI = W/pow(H,2) #平方的写法
+# BMI = W/(H*H)
+# BMI
+# print('BMI=%.1f' % BMI)
+# if BMI<=18.5:
+#     print('过轻')
+# elif 18.5<BMI<=25:
+#     print('正常')
+# elif 25<BMI<28:
+#     print('过重')
+# elif 28<BMI<=32:
+#     print('肥胖')
+# else :
+#     print('严重肥胖')
+######## for 循环
+#Python的循环有两种，一种是for...in循环，依次把list或tuple中的每个元素迭代出来，看例子：
+#eg
+# sum = 0
+#for x in range(101): #range 函数 产生一定范围的数字
+#     sum = sum + x
+# print(sum)
+#第二种循环是while循环，只要条件满足，就不断循环，条件不满足时退出循环。比如我们要计算100以内所有奇数之和，可以用while循环实现
+#eg
+# sum = 0
+# n = 100
+# while n > 0:
+#     sum = sum + n
+#     n = n - 1
+# print(sum)
+#请利用循环依次对list中的每个名字打印出Hello, xxx!：
+# L = ['Bart', 'Lisa', 'Adam']
+# for B in L :
+#     print('Hello,',B,'!')
+#     print("Hello, %s!" % B)
