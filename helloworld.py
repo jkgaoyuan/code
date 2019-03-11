@@ -173,4 +173,30 @@
 # # print('HELLO,',B,'!')
 #  print("Hello, %s!" % B)
 # END
+# # # #x='gaoyuan'
+# # # name = str (input('输入你的名字：'))
+# # # age = int (input('输入你的年龄：'))
+# # # where = str (input('输入你的地址：'))
 
+# # # #where='tarena'
+# # # print('I am %s,and %dyears odd.I study at %s.' %(name,age,where))
+#19.3.11
+# # # #print(name,age,where)
+# # nu = int(input('输入数字：'))
+# # if nu == 1:#　如果要对比　ｓｔｒ类型的数据　要加‘’　eg:　if nu == 'a':　　
+# #     print(nu)
+# # elif nu == 2:
+# #     print(nu)
+# # elif nu == 3:
+# #     print(nu)
+# # else:
+# #     print('null')
+# who = str(input('人物：'))
+# if who == '糖糖':
+#     print('YES%s属于西游记' %who)
+# elif who == '空空':
+#     print('YES%s属于西游记' %who)
+# elif who == '沙沙':
+#     print('YES%s属于西游记' %who)
+# else:
+#     print('不属于西游记')
