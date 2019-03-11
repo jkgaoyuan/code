@@ -173,14 +173,15 @@
 # # print('HELLO,',B,'!')
 #  print("Hello, %s!" % B)
 # END
-# # # #x='gaoyuan'
-# # # name = str (input('输入你的名字：'))
-# # # age = int (input('输入你的年龄：'))
-# # # where = str (input('输入你的地址：'))
 
-# # # #where='tarena'
-# # # print('I am %s,and %dyears odd.I study at %s.' %(name,age,where))
-#19.3.11
+# dict and set
+
+# import numpy as np
+# import matplotlib.pyplot as plt
+# t = np.arange(0, 4., 0.1)
+# plt.plot(t, t, t, t+2, t, t**2)
+
+# 19.3.11
 # # # #print(name,age,where)
 # # nu = int(input('输入数字：'))
 # # if nu == 1:#　如果要对比　ｓｔｒ类型的数据　要加‘’　eg:　if nu == 'a':　　
@@ -191,20 +192,20 @@
 # #     print(nu)
 # # else:
 # #     print('null')
-# who = str(input('人物：'))
-# if who == '糖糖':
-#     print('YES%s属于西游记' %who)
-# elif who == '空空':
-#     print('YES%s属于西游记' %who)
-# elif who == '沙沙':
-#     print('YES%s属于西游记' %who)
-# else:
-#     print('不属于西游记')
+who = str(input('人物：'))
+if who == '糖糖':
+    print('YES%s属于西游记' %who)
+elif who == '空空':
+    print('YES%s属于西游记' %who)
+elif who == '沙沙':
+    print('YES%s属于西游记' %who)
+else:
+    print('不属于西游记')
 #########list 列表 写法
-#who = str(input('人物：'))
-#L = ['糖糖','空空','沙沙']
-#if who in L :
+# who = str(input('人物：'))
+# L = ['糖糖','空空','沙沙']
+# if who in L :
 #    print('YES%s属于西游记' %who)
-#else:
+# else:
 #    print('不属于西游记')
-        
+
