@@ -200,3 +200,11 @@
 #     print('YES%s属于西游记' %who)
 # else:
 #     print('不属于西游记')
+#########list 列表 写法
+#who = str(input('人物：'))
+#L = ['糖糖','空空','沙沙']
+#if who in L :
+#    print('YES%s属于西游记' %who)
+#else:
+#    print('不属于西游记')
+        
