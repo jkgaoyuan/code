@@ -316,5 +316,5 @@
 # for x in range(5,0,-1):  ##倒计时
 #     print(x,'!!!')
 #     time.sleep(1)
-print('获奖者是',random.randint(1,n))
+#print('获奖者是',random.randint(1,n))
 # ####random.randint(0,n) 随机模块
