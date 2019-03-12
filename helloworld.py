@@ -192,14 +192,14 @@
 # #     print(nu)
 # # else:
 # #     print('null')
-who = str(input('人物：'))
-if who == '糖糖':
+#who = str(input('人物：'))
+#if who == '糖糖':
     print('YES%s属于西游记' %who)
-elif who == '空空':
+#elif who == '空空':
     print('YES%s属于西游记' %who)
-elif who == '沙沙':
+#elif who == '沙沙':
     print('YES%s属于西游记' %who)
-else:
+#else:
     print('不属于西游记')
 #########list 列表 写法
 # who = str(input('人物：'))
@@ -209,3 +209,112 @@ else:
 # else:
 #    print('不属于西游记')
 
+################################
+####19.3.12
+####输入密码账户　判断是否　合法　　提示账户／　密码错误
+# username = str (input('输入你的账户：'))
+# userpassed = str (input('输入你的密码：'))
+# if username == 'gao' and userpassed == '123':
+#     print('accept')
+# elif username != 'gao' and userpassed == '123':
+#     print('usernameErro')
+# else :    ##########else 是不能进行判断的　
+#     print('userpassedErro')
+###############################    
+##### else:
+####＃     print('erro')
+#####list 写法
+# username = str (input('输入你的账户：'))
+# userpassed = str (input('输入你的密码：'))
+# sorees = ['gao','123']
+# if username in sorees and userpassed in sorees:
+#     print('accept')
+# else:
+#     print('erro')
+##############################
+# for x in range(1,101,2):
+###########奇数偶数
+# jishu = []
+# oushu = []
+# for x in range(0,101):
+#     if x%2==0:
+#         oushu.append(x)######把循环出的奇数添加到jishu[]中
+        
+#     else:
+#         jishu.append(x)
+
+# print('D',oushu)
+# print('O',jishu)
+###############　判断输入的字符中包含ａ
+# A = []####定义数组
+# nu = str(input('输入包含a的字符'))
+# for x in nu:
+#     if x=='a':
+#         A.append(x)####追加字符进入Ａ数字
+        
+#     else:
+#         print('zero')
+# print(A)
+####################输出１－９９９９９ＡＳＣＩ对应的文字
+# strat = int(input('strat'))
+# stop = int(input('stop'))
+# for x in range(strat,stop): 
+#     print(chr(x),end= ' ')
+#############切片　
+# s = 'ABCDE'
+# a = s[::2]
+# print(a)
+###############回文判断
+# s = str(input('输入回文'))
+
+# if s[:]==s[:-1]:
+#     print('YES')
+# else:
+#     print('NO')
+##############数字是不能进行切片的　只有字符才能
+#水仙花数的判断
+# for x in range(100,1000):
+#     s = str(x) 
+#     bai = int(s[0])
+#     shi = int(s[1])
+#     ge = int(s[2])
+#     if x == bai**3+shi**3+ge**3:
+#     #if int(s)==bai***3+shi**2+ge:
+#         print(x,'是水仙花数')
+###########################自己函数定义
+# def lin1():
+#     print('+----+----+')
+# def lin2():
+#     print('|    |    |')
+# lin1()
+# lin2()
+# lin2()
+# lin2()
+# lin1()
+# lin2()
+# lin2()
+# lin2()
+# lin1()
+# lin2()
+# lin2()
+# lin2()
+# lin1()
+###################模块
+# import time#导入模块
+
+# def hh():
+#     print('从前有座山，山里有座庙，庙里住着老和尚')
+#     time.sleep(0.5)#时间延时模块
+#     hh()
+# hh()
+################################
+####抽奖脚本
+# import random   
+# import time 
+
+# n = int(input('输入班级人数'))
+# for x in range(5,0,-1):  ##倒计时
+#     print(x,'!!!')
+#     time.sleep(1)
+print('获奖者是',random.randint(1,n))
+# ####random.randint(0,n) 随机模块
