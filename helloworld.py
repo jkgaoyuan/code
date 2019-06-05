@@ -192,15 +192,15 @@
 # #     print(nu)
 # # else:
 # #     print('null')
-who = str(input('人物：'))
-if who == '糖糖':
-    print('YES%s属于西游记' %who)
-elif who == '空空':
-    print('YES%s属于西游记' %who)
-elif who == '沙沙':
-    print('YES%s属于西游记' %who)
-else:
-    print('不属于西游记')
+# who = str(input('人物：'))
+# if who == '糖糖':
+#     print('YES%s属于西游记' %who)
+# elif who == '空空':
+#     print('YES%s属于西游记' %who)
+# elif who == '沙沙':
+#     print('YES%s属于西游记' %who)
+# else:
+#     print('不属于西游记')
 #########list 列表 写法
 # who = str(input('人物：'))
 # L = ['糖糖','空空','沙沙']
