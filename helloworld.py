@@ -208,4 +208,4 @@
 #    print('YES%s属于西游记' %who)
 # else:
 #    print('不属于西游记')
-test
+
