@@ -208,9 +208,11 @@
 #    print('YES%s属于西游记' %who)
 # else:
 #    print('不属于西游记')
+#输入数据 一判断是否复合 list 中的规则
 who = str(input('name:'))
 L = ['ceng','zeng','guo']
 if who in L :
         print('YES%sshuyu' %who)
 else:
     print('not')
+# pythen 由c编写 python可以运行在任何c编译器的平台上
