@@ -208,4 +208,9 @@
 #    print('YES%s属于西游记' %who)
 # else:
 #    print('不属于西游记')
-
+who = str(input('name:'))
+L = ['ceng','zeng','guo']
+if who in L :
+        print('YES%sshuyu' %who)
+else:
+    print('not')
