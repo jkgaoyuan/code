@@ -209,11 +209,42 @@
 # else:
 #    print('不属于西游记')
 #输入数据 一判断是否复合 list 中的规则
-# who = str(input('name:'))
+# who = str(input('name:'))print
 # L = ['ceng','zeng','guo']
 # if who in L :
 #         print('YES%sshuyu' %who)
 # else:
 #     print('not')
-print('test')
+# print('test')
 # pythen 由c编写 python可以运行在任何c编译器的平台上
+# 格式字符必须写在引号中,单双引号没有区别, 数字可以直接写出不需要引号
+# 语句在同一行需要,号进行分隔
+# ctrl + / 可以快速注释和取消注释
+# sep='' 指定分隔符
+#print('hello'+'world') + 可以取消输出是字符间显示的空格
+#####################################
+
+# print('hello',132,'world', sep='_')
+# input('') 可以通过 input 获取键盘输入,('字符串') 表示显示的提示信息
+#     n = input('name:')
+#
+#     print(n + 1 )
+#这里执行会报错
+
+# 通过 INPUT 读取的字符都是字符类型,字符和数字是不能进行四则运算的
+#     n = input('name:')
+#
+#     print(int(n) + 1 )
+# 而这里不会
+
+############
+##编写一个输入用户名,输入正确后,显示欢迎
+un = input('username:')
+up = input('userpass:')
+if un == 'gaoyuan':
+    if up == 'gaoyuan':
+        print('wellcome',un)
+    else:
+        print('erro')
+else:
+        print('erro')
