@@ -445,6 +445,183 @@ python 支持连续比较
             顺序:字符串、列表、元组   # alist = blist 列表 指向相同的内存地址, 修改alist / blist 后 依然会指向同一个内存地址,即使alist和 blist 同时改变
             映射:字典  key:vlaue
 
+    数据类型也可以作为判断条件
+        任何值为0的数字都是false
+        任何非空对象表true 空对象是false
+
+
+            if ' ':
+            print('space is true')
+
+            if  0.1:
+                print('none zero')
+
+            if -0.0:
+                print('0 is false ')
+
+            if ():
+                print('元组 is false')
+
+            if  {}:
+                print('字典 是为false')
+            if []:
+                print('list is false')
+
+            if [1,2]:
+                print('list is true')
+
+    三元表达式
+
+        a = 10
+        b = 20
+        s = a if a <= b else b
+        print(s)
+
+        和 是一个意思
+
+        a = 10
+        b = 20
+
+        if a <= b :
+            print(a)
+        else:
+            print(b)
+
+    使用 getpass 模块可以 不显示密码
+
+    import getpass
+    user = str(input('username:'))
+    userpass = getpass.getpass('pass:')
+
+    if user == 'tom'and userpass == '123':
+        print('\033[32;1m%s access\033[0m' % user)
+    else:
+        print('\033[31;1m%s noauth\033[0m' % user)
+
+
+    #使用int型比较str 类型会出错
+
+    scoure = int(input('你的成绩:'))
+    if  60 < scoure <= 70:
+        print('及格')
+    elif 70 < scoure <= 80:
+        print('可以')
+    elif 80 < scoure < 90:
+        print('good')
+    elif scoure >= 90:
+        print('nb')
+    else:
+        print('fail')
+
+    猜拳游戏
+
+    random  模块
+
+    import random 和 random.choice
+
+        import random
+        all_list = ['石头','拳头','布']
+        computer = random.choice(all_list)
+        play = input('你的选择/石头/拳头/布:')
+        print('play: %s,computer: %s' % (play,computer) )
+
+        if play == '拳头':
+            if computer == '拳头':
+                print('\033[32;1m平局\033[0m')
+            else:
+                print('\033[31;1m失败\033[0m')
+
+
+        elif play == '石头':
+            if computer == '石头':
+                print('\033[32;1m平局\033[0m')
+            elif computer == '拳头':
+                print('\033[31;1m赢了\033[0m')
+            else:
+                print('\033[31;1m赢了\033[0m')
+        else:
+            if computer == '石头':
+                print('\033[32;1失败\033[0m')
+            elif computer == '拳头':
+                print('\033[31;1m赢了\033[0m')
+            else:
+                print('\033[31;1m平局\033[0m')
+
+    改进版本
+        通过对win_list 列表的匹配来判断是否成功
+        import random
+
+        all_list = ['石头','拳头','布']
+        win_list = [['石头','拳头'],['石头','布'],['拳头','布']]   #前面是用户后面是电脑
+        prompt = '''0 石头
+        1 拳头
+        2 布
+        请选择'''
+        computer = random.choice(all_list)
+        ind = int(input(prompt))
+        play = all_list[ind]
+        print('play: %s,computer: %s' % (play,computer) )
+
+        if play == computer:
+
+            print('\033[32;1m平局\033[0m')
+
+        elif [play,computer] in win_list:  ##前面是用户后面是电脑 和 win_list对应
+                    print('\033[31;1m赢了\033[0m')
+
+        else:
+                    print('\033[32;1m失败\033[0m')
+
+    100以内求和
+
+        result = 0
+        counter = 1
+        while counter <= 100:
+            result += counter
+            counter += 1
+        print(result)
+
+while 循环 执行 循环次数未知的情况
+    循环条件为真循环一直执行
+
+    while 循环判断:
+        循环代码
+while 循环的else语句
+    while 循环判断:
+        循环代码
+    else:       ##循环的else 当break时不执行,否则执行
+        代码
+
+break / continue
+
+
+
+range函数
+    生成 整数
+
+    range(100) #起始从0 开始
+    range(1,100) #  range(start,end) 起始从1开始 结束数字100 不包含
+    range(1,100,5)  #5 为步长
+    list(range(10,0,-1))  # 步长为 负数表示从大到小
+    list(range(100))
+列表计算
+    >>> [10 +2 for i in range(1,10)]
+        [12, 12, 12, 12, 12, 12, 12, 12, 12]
+    >>> [10 + i for i in range(1,10)]
+        [11, 12, 13, 14, 15, 16, 17, 18, 19]
+    >>> [10 + i for i in range(1,11)]
+        [11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+    >>> [10 + i for i in range(1,11) if i % 2 == 1 ]
+        [11, 13, 15, 17, 19]
+
+
+
+    nums = []
+    for i in range(1,11):
+        if i % 2  == 1 :
+            nums.append(10 + i )
+
+
 
 补充:
     关于字典的.copy()
@@ -470,3 +647,15 @@ python 支持连续比较
     sorted() 对所有可迭代的对象进行排序操作
     Define 是不一个python的关键词
     字典.copy() 对二级目录是引用
+
+    字典的复制 验证
+    a = {'1':1,'2':[2,4]}
+    b = a.copy()  ###浅拷贝(引用):父对象,深拷贝父对象(一级目录),不会随着a的变化而改变,子对象(二级目录)是浅拷贝会随着a的改变而改变
+    a['1'] = 3    ### 在a['2'][0] 被修改后对应的变化出现在b['2'][0]上
+    sun1 = a['1'] + b['1']
+    a['2'][0] = 5  #b['2'][0]的值为 5
+    sum2 = a['2'][0] + b['2'][0]
+    print(sun1,sum2)
+    print(b)
+    print(a)
+    print(b['2'][0])
