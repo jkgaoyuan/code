@@ -623,6 +623,206 @@ range函数
 
 
 
+读取文本文件
+     f = open('/tmp/fstab') #打开文件
+     data = f.read()      #默认读取全部文件
+     print(data)          #输出文件
+     data = f.read()      #再读一次文件  这时文件指针已经在文件末尾 所以不输出 任何
+     print(data)          #输出
+
+    data = f.read(4)   # 读文件的前4个字符
+    print(data)
+    data = f.readline() #读一行,里面写实数字表示读几个字符
+    print(data)
+
+    data = f.readlines() #读取整个文件,将文件转换为一个列表, 每行是列表的一项
+    print(data)
+
+#读取文件 for 循环方式
+    f = open('/tmp/passwd')
+    for i in f:
+        print(i,end='')
+    f = f.close()
+    print(f)
+
+以bytes方式读取文件
+
+读取任何文件都可以用bytes方式打开。读取文件内容时，
+如果是文本内容，将会以字符的形式显示，如果不能转成字符，将会直接显示16进制数。
+
+
+    f = open('/bin/ls','rb')  #r 表示读 b 表示字节
+    a = f.read()    #读取时python试图将内容转换成字符
+    print(a)
+
+写文本文件
+
+    f = open('/tmp/passwd','w')
+    f.write('hello word!\n')
+    f.flush()       #刷新会保存
+    f.writelines(['2nd line\n','3rd line\n'])
+    f.close()       #关闭文件也会保存
+    f = open('/tmp/passwd','rb')
+    print(f.read())
+
+with 语句
+    使用with 打开文件,with 语句结束后文件自动关闭
+    with open('/tmp/passwd') as f:
+        for line in f:
+            print(line,end='')
+
+
+移动指针   (了解 看看)
+    ```python
+    >>> f = open('/tmp/passwd', 'rb')
+    >>> f.tell()   # 返回文件指针位置，从文件开头到文件指针间的偏移量
+    0
+    >>> f.read(5)
+    b'hello'
+    >>> f.tell()
+    5
+    >>> f.seek(0, 0)   # 移动指针到文件开头
+    # seek第二个参数是相对位置，0表示开头，1表示当前位置，2表示结尾；第一个参数是偏移量
+    >>> f.seek(-6, 2)   # 移动指针到文件结尾前的第6个位置
+    >>> f.close()
+练习复制
+
+    ##模拟cp 操作 拷贝/bin/ls 到指定位置
+     参考day03 中的 cp_ls.py
+
+     写法1:
+        original_ls = open('/usr/bin/ls','rb')
+        target_ls = open('/home/student/ls','wb')
+        original_ls1 = original_ls.read()
+        print(original_ls)
+        target_ls.write(original_ls1)
+        original_ls.close()
+        target_ls.close()
+        t = open('/home/student/ls','rb')
+        print(t.read())
+
+
+     方法2:
+        f1 = open('/bin/ls', 'rb')
+        f2 = open('/tmp/ls', 'wb')
+
+        data = f1.read()
+        f2.write(data)
+
+        f1.close()
+        f2.close()
+        ```
+
+        以上代码存在的问题
+
+        - 尽量使用变量，不要直接使用'/bin/ls'这样的直接量
+        - 变量名应该有意义，f1和f2这样的名称没有意义
+        - 读取数据时，一次将全部内容读入，有可能数据量太大
+
+## 函数
+
+    给一段代码起个名。假如有一个功能，需要10行代码，而这个功能需要在5个地方重复使用。
+    可以将这些功能代码封装到函数中，以后需要用到这个功能，就调用函数。
+
+
+    def gen_fib(n):
+        fib = [0,1]
+        for i in range(n - 2):
+            fib.append(fib[-1] + fib[-2])
+
+        return fib
+    mylist = [5,8,10,7,13]
+    for i in mylist:
+        print(gen_fib(i))
+    a = int(input('leng:'))
+
+    result = gen_fib(a)
+
+    print(result)
+函数定义时，代码不会执行。调用函数时，函数内的代码才会执行。
+
+### 函数的返回值
+
+- 函数执行的结果，可以使用return进行返回
+- 如果函数没有return语句，默认返回None
+- 当函数遇到return语句时，函数将会返回结果，停止执行
+
+### 函数的参数
+
+- 函数需要处理的数据，一般是通过参数进行传递的
+- 定义函数时，参数值不确定，用一个名称进行占位，称作形式参数、形参
+- 函数调用时，将具体的数据传递给函数，这个具体的数据是实际使用的参数，称作实际参数、实参
+- 形参赋值给实参时，认为是变量赋值即可
+
+    形参
+    import sys
+    print(sys.argv)
+
+ 参考 code/all_note/day03/cp_ls.py
+
+练习: 使用函数取出指定字符串中的数字
+    def num(alist):
+        str = ''
+        for i in alist:
+            if i in '1234567980':
+                str += i
+        return str
+    s1 = 'asdfa1313546wadfaf13314'
+    a = num(s1)
+    print(a)
+练习: 使用函数取出指定字符串中第一个字符前的空格,将其他字符输出
+    def str(a):
+        for i in range(len(a)):
+            if i != ' ':
+                break
+
+        return a[i:]
+
+    s1 = '   hello world'
+    result = str(s1)
+    print(result)
+
+
+模块
+    什么是模块
+        所有的.py文件都属于模块
+        在python 中使用 import 导入模块
+        参考 nsd1903/day03/star.py
+
+    导入模块
+
+        直接导入
+            >>> import time
+            >>> time.strftime('%Y-%m-%d')
+            '2019-08-02'
+        导入模块的指定功能
+            >>> from random import randint, choice
+            >>> randint(1,100)
+            31
+
+        一次导入多个模块
+            >>> import os,sys
+        导入模块并起别名
+            >>> import getpass as gp
+            >>> gp.getpass()
+            Password:
+            '13'
+模块的特性
+
+    foo.py
+    print(__name__)
+    bar.py
+    import foo
+
+    [student@room9pc01 day03]$ python foo.py
+    __main__
+    [student@room9pc01 day03]$ python bar.py
+    foo
+
+    直接使用显现_main_
+    模块间接运行(调用)是模块名
+
+
 补充:
     关于字典的.copy()
 
