@@ -7,7 +7,7 @@
 
 import sys
 import subprocess
-# import rendpass
+import rendpass
 
 #### 模块调用失败
 
