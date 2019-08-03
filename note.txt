@@ -756,9 +756,26 @@ with 语句
 
     形参
     import sys
-    print(sys.argv)
+    print(sys.argv) ##传递的字符形式
 
  参考 code/all_note/day03/cp_ls.py
+        import sys
+    def cp2(src_fname,dst_fname):
+        src_fobj = open(src_fname,'rb')
+        dst_fobj = open(dst_fname,'wb')
+        while 1:
+            data = src_fobj.read(4096)
+            if not data:
+                break
+            dst_fobj.write(data)
+        src_fobj.close()
+        dst_fobj.close()
+
+    cp2(sys.argv[1],sys.argv[2])
+
+
+
+
 
 练习: 使用函数取出指定字符串中的数字
     def num(alist):
@@ -821,6 +838,143 @@ with 语句
 
     直接使用显现_main_
     模块间接运行(调用)是模块名
+
+
+
+
+模块介绍
+    在如下网址查询 python 模块和用法
+        https://docs.python.org/3/
+
+    shutil 模块
+
+        主要实现复制,移动
+
+
+
+        ```python
+        import shutil
+
+        # 拷贝文件对象的方式，了解
+        f1 = open('/etc/passwd', 'rb')
+        f2 = open('/tmp/mima', 'wb')
+
+        shutil.copyfileobj(f1, f2)
+        f1.close()
+        f2.close()
+
+        # 直接拷贝文件
+        >>> shutil.copyfile('/etc/shadow', '/tmp/sd')
+        '/tmp/sd'
+
+        # 将文件拷贝到目标目录，或指定目标位置及名字，常用
+        >>> shutil.copy('/etc/hosts', '/tmp/')
+        '/tmp/hosts'
+        >>> shutil.copy('/etc/hosts', '/tmp/zhuji.txt')
+        '/tmp/zhuji.txt'
+
+        # copy2相当于是cp -p  ， 常用
+        >>> shutil.copy2('/etc/hosts', '/tmp/zhj')
+        '/tmp/zhj'
+
+        # cp -r /etc/security /tmp/anquan， 常用
+        >>> shutil.copytree('/etc/security', '/tmp/anquan')
+        '/tmp/anquan'
+
+        # mv /tmp/anquan /var/tmp/anquan
+        >>> shutil.move('/tmp/anquan', '/var/tmp/anquan')
+        '/var/tmp/anquan'
+
+        # chown
+        >>> shutil.chown('/tmp/mima', user='bob', group='bob')
+
+
+序列对象
+
+    ```python
+    >>> list('abcd')    # 把字符串转成列表
+    ['a', 'b', 'c', 'd']
+    >>> list(range(1, 11))
+    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    >>> list((10, 20, 30))   # 把元组转成列表
+    [10, 20, 30]
+
+    >>> tuple('abcd')
+    ('a', 'b', 'c', 'd')
+    >>> tuple(range(1, 11))
+    (1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+    >>> tuple([10, 20, 30])  # 把列表转成元组
+    (10, 20, 30)
+
+    # 将各种对象转换成字符串
+    >>> str(100)
+    '100'
+    >>> str([10, 20, 30])
+    '[10, 20, 30]'
+    >>> str((100, 200, 300))
+    '(100, 200, 300)'
+
+    # 翻转函数
+    >>> reversed('abcd')
+    <reversed object at 0x7f8155118ba8>
+    >>> list(reversed('abcd'))
+    ['d', 'c', 'b', 'a']
+    >>> for ch in reversed('abcd'):
+    ...   print(ch)
+
+    >>> 'abcd'[::-1]   # 翻转
+    'dcba'
+
+    # 排序
+    >>> sorted('qwertyu')
+    ['e', 'q', 'r', 't', 'u', 'w', 'y']
+    >>> sorted([2, 343, 2, 23, 4545, 23, 532])
+    [2, 2, 23, 23, 343, 532, 4545]
+
+### 字符编码
+
+    - 计算机内部存储时，都是2进制的0和1
+    - 可以提前预定义好一串0/1的组合代表什么字符
+    - ASCII是美国信息交换标准代码的简称，用7位表示字符
+    - 欧洲主要采用Latin-1，即ISO-8859-1字符集，共8位
+    - 中国采用的是gbk / gb2313 / gb18030字符集
+    - ISO国际标准化组织制定了万国码Unicode，utf8是其中的一种编码方案，它采用变长的编码方案，如果是英文字符，直接用1个字节表示，如果是汉字，用三个字节表示。
+
+    ```python
+    >>> s1 = '中国'
+    >>> s1.encode()    # 默认使用utf8编码，显示中国的utf8编码
+    b'\xe4\xb8\xad\xe5\x9b\xbd'
+    >>> s1.encode('gbk')   # 明确指明使用的编码方案是gbk
+    b'\xd6\xd0\xb9\xfa'
+    ```
+字符串格式化
+    %s 字符 %d 转换为 10 进制
+    %f float 类型
+    %c 将数字转化为asicll 所对应的字符
+    %#o 转化为8 进制
+    >>> '%10s%10s' % ('tom', 20) ### 左对齐 占位符10字符宽度
+        '       tom        20'
+    >>> '%-10s%-10s' % ('tom', 20) ### 右对齐
+        'tom       20        '
+    >>> '%5.2f' % (1/3)  ## 5.2 占位符 共5 字符 小数点后2 位
+        ' 0.33'
+
+    >>> '%c' % 89  ##将数字 10 进制转化为asicll 所对应的字符
+        'Y'
+    >>> '%#o' % 10  ###转化为8 进制
+        '0o12'
+    >>> '%#x' % 5   ### 转化为16 进制
+         '0x5'
+    >>> '%010d' % 5  ## 共 10 个字符宽度不够0 补齐
+        '0000000005'
+
+
+
+
+
+
+
+
 
 
 补充:

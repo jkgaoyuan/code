@@ -5,10 +5,10 @@
 # data = f.read(3)
 # print(data)
 
-# data = f.readline()
+# data = f.readline() ##读一行,里面写实数字表示读几个字符
 # print(data)
 
-# data = f.readlines()
+# data = f.readlines() ##读取整个文件,将文件转换为一个列表, 每行是列表的一项
 # print(data)
 
 # data =  f.close()

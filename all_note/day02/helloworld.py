@@ -159,28 +159,30 @@
 #     print(alist)
 # gen_fib()
 
-import random
-all_choise = ['石头','剪刀','布']
-win_list = [['石头','布'],['石头','剪刀'],['剪刀','布']]
+# import random
+# all_choise = ['石头','剪刀','布']
+# win_list = [['石头','布'],['石头','剪刀'],['剪刀','布']]
+#
+# pt = '''0 石头
+# 1 剪刀
+# 2 布
+# 输入:'''
+#
+# a = 0
+# b = 0
+# while a < 2 and b < 2:
+#     ind = int(input(pt))
+#     print(ind)
+#     play  = all_choise[ind]
+#     cchoise = random.choice(all_choise)
+#     print('PLAY CHOISE %s,PC CHOISE %s' %(play,cchoise))
+#     if play == cchoise:
+#         print('\033[32;1m equation \033[0m')
+#     elif [play,cchoise] in win_list:
+#         print('\033[31;1m you win \033[0m')
+#         a += 1
+#     else:
+#         print('\033[31;1mloss\033[0m')
+#         b += 1
 
-pt = '''0 石头
-1 剪刀
-2 布
-输入:'''
 
-a = 0
-b = 0
-while a < 2 and b < 2:
-    ind = int(input(pt))
-    print(ind)
-    play  = all_choise[ind]
-    cchoise = random.choice(all_choise)
-    print('PLAY CHOISE %s,PC CHOISE %s' %(play,cchoise))
-    if play == cchoise:
-        print('\033[32;1m equation \033[0m')
-    elif [play,cchoise] in win_list:
-        print('\033[31;1m you win \033[0m')
-        a += 1
-    else:
-        print('\033[31;1mloss\033[0m')
-        b += 1
