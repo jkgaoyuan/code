@@ -889,6 +889,23 @@ with 语句
         >>> shutil.chown('/tmp/mima', user='bob', group='bob')
 
 
+    subprocess模块
+
+        # 在shell环境中执行命令ls ~
+        >>> subprocess.run('ls ~', shell=True)
+        >>> result = subprocess.run('ls abcd', shell=True)
+        ls: 无法访问abcd: 没有那个文件或目录
+        >>> result.returncode
+        # returncode就是$?
+        2
+        # 将输出保存到stdout中,将错误保存到stderr中
+        >>> result = subprocess.run('id root; id john', shell=True, stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE)
+        >>> result.stdout
+        b'uid=0(root) gid=0(root) \xe7\xbb\x84=0(root)\n'
+        >>> result.stderr
+        b'id: john: no such user\n'
+
 序列对象
 
     ```python
@@ -968,6 +985,1661 @@ with 语句
     >>> '%010d' % 5  ## 共 10 个字符宽度不够0 补齐
         '0000000005'
 
+python模块布局
+    #!/usr/local/bin/python
+    # 解释器
+    """文档字符串
+    这是出现在help中的部分"""
+    import string
+    # 模块导入
+    import time
+    all_chs = string.ascii_letters + digits
+    # 全局变量定义
+    debug = True
+    class MyClass:
+    # 类定义
+    pass
+    def func1():
+    # 函数定义
+    pass
+    if __name__ == '__main__':
+    mc = MyClass()
+    func1()
+
+# nsd1903_py01_day05
+
+列表
+
+```python
+>>> alist = [10, 5, 32, 1, 8, 20]
+>>> alist[0] = 100
+>>> alist[1:3] = [45, 88, 12, 24]
+>>> alist
+[100, 45, 88, 12, 24, 1, 8, 20]
+>>> alist[2:2]
+[]
+>>> alist[2:2] = [12, 8]
+>>> alist
+[100, 45, 12, 8, 88, 12, 24, 1, 8, 20]
+
+# 列表的方法
+>>> alist.append(12)   # 追加
+>>> alist.extend([55, 32, 1])   # 加入多项
+>>> alist.remove(8)   # 移除第一个8
+>>> alist.index(12)   # 返回第一个12的下标
+>>> alist.reverse()   # 翻转
+>>> blist = alist.copy()   # 将alist的值copy后，赋值给blist
+>>> alist.insert(2, 88)   # 在下标为2的位置插入88
+>>> alist.sort()   # 升序排列
+>>> alist.sort(reverse=True)   # 降序
+>>> alist.count(12)   # 统计12出现的次数
+>>> alist.pop()   # 将最后一项弹出
+>>> alist.pop(2)   # 弹出下标为2的项目
+```
+
+## 元组
+
+相当于是静态的列表。
+
+```python
+>>> atuple = (10, 20, 15)
+>>> atuple.count(10)   # 统计10出现的次数
+1
+>>> atuple.index(15)   # 获取15的下标
+2
+>>> a = (10)
+>>> type(a)
+<class 'int'>
+>>> a
+10
+>>> b = (10,)   # 单元素元组必须有逗号
+>>> type(b)
+<class 'tuple'>
+>>> len(b)
+1
+```
+
+### 练习：模拟栈结构
+
+1. 发呆。思考程序的运作方式
+
+```python
+(0) 压栈
+(1) 出栈
+(2) 查询
+(3) 退出
+请选择(0/1/2/3): 2
+[]
+(0) 压栈
+(1) 出栈
+(2) 查询
+(3) 退出
+请选择(0/1/2/3): 0
+数据: hello
+(0) 压栈
+(1) 出栈
+(2) 查询
+(3) 退出
+请选择(0/1/2/3): 0
+数据: world
+(0) 压栈
+(1) 出栈
+(2) 查询
+(3) 退出
+请选择(0/1/2/3): 2
+['hello', 'world']
+(0) 压栈
+(1) 出栈
+(2) 查询
+(3) 退出
+请选择(0/1/2/3): 1
+从栈中弹出: world
+(0) 压栈
+(1) 出栈
+(2) 查询
+(3) 退出
+请选择(0/1/2/3): 2
+['hello']
+(0) 压栈
+(1) 出栈
+(2) 查询
+(3) 退出
+请选择(0/1/2/3): 1
+从栈中弹出: hello
+(0) 压栈
+(1) 出栈
+(2) 查询
+(3) 退出
+请选择(0/1/2/3): 1
+空栈
+(0) 压栈
+(1) 出栈
+(2) 查询
+(3) 退出
+请选择(0/1/2/3): 3
+bye-bye
+```
+
+2. 思考程序有哪些功能，将功能定义成函数
+
+```python
+def push_it():
+
+
+def pop_it():
+
+def view_it():
+
+def show_menu():
+
+
+if __name__ == '__main__':
+    show_menu()
+```
+
+## 字典
+
+- 映射、可变、容器
+- 字典key不能重复
+- 为字典赋值时，key存在则修改，不存在则新建
+
+```python
+>>> dict(['ab', ['name', 'bob'], ('age', 20)])
+{'a': 'b', 'name': 'bob', 'age': 20}
+>>> dict([('name', 'tom'), ('age', 20), ('mail', 'tom@tedu.cn')])
+{'name': 'tom', 'age': 20, 'mail': 'tom@tedu.cn'}
+
+>>> {}.fromkeys(['tom', 'jerry', 'bob'], 20)
+{'tom': 20, 'jerry': 20, 'bob': 20}
+
+>>> info = dict([('name', 'tom'), ('age', 20), ('mail', 'tom@tedu.cn')])
+>>> info
+{'name': 'tom', 'age': 20, 'mail': 'tom@tedu.cn'}
+>>> for key in info:
+...   print(key, info[key])
+...
+name tom
+age 20
+mail tom@tedu.cn
+
+>>> '%(name)s is %(age)s years old' % info
+'tom is 20 years old'
+>>> '%s is %s years old' % (info['name'], info['age'])
+'tom is 20 years old'
+
+>>> info['age'] = 22
+>>> info['phone'] = '15012345678'  ## 添加键值对
+>>> info
+{'name': 'tom', 'age': 22, 'mail': 'tom@tedu.cn', 'phone': '15012345678'}
+>>> 'tom' in info
+False
+>>> 'name' in info   ### 判断key 是否在 字典中
+True
+>>> len(info) ##计算info 长度
+4
+
+```
+>>> info.keys() ##取出所有的key
+    dict_keys(['name', 'age', 'mail', 'phone'])
+>>> info.values() ##取出所有的values
+    dict_values(['tom', 20, 'tom@tedu.cn', '123456789'])
+>>> info.items() ##取出所以键值对
+    dict_items([('name', 'tom'), ('age', 20), ('mail', 'tom@tedu.cn'), ('phone', '123456789')])
+>>> list(info.items())  ###将键值对转化为列表
+    [('name', 'tom'), ('age', 20), ('mail', 'tom@tedu.cn'), ('phone', '123456789')]
+
+###常用
+>>> print(dict_name.get('key','default_text')) ##key找不到则返回设定好的值,找到就返回values
+
+>>> print(info.get('phaone','110')) ##key找不到phone 字段就返回 110
+
+集合
+集合是一个数学上的概念
+它由不同元素构成
+集合元素必须是不可变对象
+集合是无序的
+集合就像是一个无值的字典
+集合分成可变集合和不可变集合
+集合分成可变集合和不可变集合
+    # 找不到key返回not found>>> frozenset('abc')
+    # 不可变集合,集合一旦创建,不能做增删改操作
+    frozenset({'b', 'a', 'c'})
+    >>> set(['tom', 'jerry', 'bob'])
+    {'jerry', 'tom', 'bob'}
+    >>> aset = set('abc')
+    >>> bset = set('bcd')
+    >>> aset
+    {'b', 'a', 'c'}
+    >>> bset
+    {'b', 'd', 'c'}
+    >>> aset & bset
+    # 交集,两个集合中都有的元素
+    {'b', 'c'}
+    >>> aset | bset
+    # 并集,两个集合中所有的元素
+    {'b', 'd', 'a', 'c'}
+    >>> aset - bset
+    # 差补,aset中有,bset中无
+    {'a'}
+    >>> bset - aset
+    {'d'}
+    >>> aset
+    {'b', 'a', 'c'}
+    >>> len(aset)
+    3
+    >>> 'a' in aset
+    True
+    >>> for ch in aset:
+    ...
+    print(ch)
+    >>> aset.add(10)
+    >>> aset.pop()
+    # 向集合中加入新项目
+    # 弹出任意一个元素
+    'b'
+    >>> aset.remove(10)
+    # 删除指定的元素
+    >>> aset.update(['tom', 'jerry', 'bob'])
+    >>> aset
+    {'tom', 'a', 'jerry', 'bob', 'c'}
+    >>> aset = set('abc')
+    >>> bset = set('bcd')
+    >>> aset.union(bset)
+    # aset | bset
+    {'b', 'd', 'a', 'c'}
+    >>> aset.intersection(bset)
+    # aset & bset
+    {'b', 'c'}
+    >>> aset.difference(bset)
+    # aset - bset
+    {'a'}
+    >>> cset = aset.union(bset)
+    >>> aset.issubset(cset)
+    # aset是cset的子集吗?
+    True
+    >>> cset.issuperset(aset)
+    # cset是aset的超集吗?
+    True
+    # 经常使用集合实现去重操作
+    >>> from random import randint>>> nums = [randint(1, 20) for i in range(20)]
+    >>> nums
+    [6, 12, 18, 19, 1, 1, 16, 15, 5, 6, 18, 19, 14, 11, 17, 13, 2, 5, 20, 16]
+    >>> result = []
+    >>> for i in nums:
+    ... if i not in result:
+    ... result.append(i)
+    >>> result
+    [6, 12, 18, 19, 1, 16, 15, 5, 14, 11, 17, 13, 2, 20]
+    >>> list(set(nums))
+    [1, 2, 5, 6, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+
+    url1.txt : 第一天用户访问过的url
+    url2.txt:第二天用户访问过的url
+    需求:找出第二天新的url
+    (nsd1903) [root@room8pc16 day05]# cp /etc/passwd /tmp/
+    (nsd1903) [root@room8pc16 day05]# cp /etc/passwd /tmp/mima
+    # 修改mima,使它与/tmp/passwd有所区别
+    >>> with open('/tmp/passwd') as f1:
+    ...
+    set1 = set(f1)
+    # set1中的元素是文件的每一行
+    >>> with open('/tmp/mima') as f2:
+    ...
+    set2 = set(f2)
+    >>> set2 - set1
+    {'how are you?\n', 'hello world\n'}
+    >>> with open('/tmp/result.txt', 'w') as f3:
+    ...
+    f3.writelines(set2 - set1)
+练习:
+模拟unix2dos程序
+windows系统把\r\n作为行结束标志
+非windows系统把\n作为行结束标志
+python l2w.py userdb.py =>生成新文件,已经具有windows的换行符
+
+
+
+
+
+
+
+
+
+补充:
+    关于字典的.copy()
+
+    参考:
+    https://www.runoob.com/python3/python3-att-dictionary-copy.html
+    a = {'1':1,'2':[2,4]}
+    b = a.copy()  ###浅拷贝(引用):父对象,深拷贝父对象(一级目录),不会随着a的变化而改变,子对象(二级目录)是浅拷贝会随着a的改变而改变
+    a['1'] = 3    ### 在a['2'][0] 被修改后对应的变化出现在b['2'][0]上
+    sun1 = a['1'] + b['1']
+    a['2'][0] = 5  #b['2'][0]的值为 5
+    sum2 = a['2'][0] + b['2'][0]
+    print(sun1,sum2)
+    print(b)
+    print(a)
+    print(b['2'][0])
+
+
+
+    Hash()  用于获取取一个对象（字符串或者数值等）的哈希值。
+    Id() 返回对象的内存地址。
+    Type() (其实不是一个函数而是一个元类)在python中是即简单又实用的一种对象数据类型查询方法。如果你只有第一个参数则返回对象的类型，三个参数返回新的类型对象
+    sorted() 对所有可迭代的对象进行排序操作
+    Define 是不一个python的关键词
+    字典.copy() 对二级目录是引用
+
+    字典的复制 验证
+    a = {'1':1,'2':[2,4]}
+    b = a.copy()  ###浅拷贝(引用):父对象,深拷贝父对象(一级目录),不会随着a的变化而改变,子对象(二级目录)是浅拷贝会随着a的改变而改变
+    a['1'] = 3    ### 在a['2'][0] 被修改后对应的变化出现在b['2'][0]上
+    sun1 = a['1'] + b['1']
+    a['2'][0] = 5  #b['2'][0]的值为 5
+    sum2 = a['2'][0] + b['2'][0]
+    print(sun1,sum2)
+    print(b)
+    print(a)
+    print(b['2'][0])    print('你好我是jkgao')
+    count = 0
+    while (count<9):
+        print('The count is:', count)
+        count = count + 1
+    print('END')
+    numbers = [12, 37, 65, 100, 77, 53] #奇数偶数
+    even = []
+    odd = []
+    while len(numbers) > 0 :
+        number = numbers.pop()
+        if(number % 2 == 0) :
+            even.append(number)
+            print('even=', even)
+        else:
+            odd.append(number)
+            print('odd=', odd)
+
+    n = 123
+    f = 456.789
+    s1 = 'Hello, world'
+    s2 = 'Hello, \'Adam\''# 字符
+    s3 = r'Hello, "Bart"'
+    s4 = 'i\'m "ok"'
+    s5 = r'''Hello,
+    Lisa!'''
+    print(n,'\n',f,'\n',s1,'\n',s2,'\n',s3,'\n',s4,'\n',s5,)#
+
+
+    a = 'ABC'
+    b = a
+    a = 'pi'    #赋值 这里的运算和数学的运算是不一样的》！！！！ 这里是吧b指向a指向的字符
+
+    print(b)
+    print(a)
+
+    b1 = 72
+    b2 = 85
+    r = (b2-b1)/b1*100
+    print('小明成绩提升的百分点 %.1f%%' % r)
+    print('%.1f%%' % r) #这里 用%%来表示一个%
+    #
+    names = ['michel','bob','trcey']
+    for name in names :      #for循环
+        print(name)
+    #
+    sum = 0
+    for i in[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]:
+        sum = sum + i
+    print(sum)
+    #
+    sum = 0
+    for i in range(101):
+        sum = sum + i
+    print(sum)
+    #
+    # f = list(range(100))  #产生整数数列 这里的范围是从零开始的
+    # print(f)
+#100以内的奇数求和
+    sum = 0
+    n = 99
+    while n > 0 :
+        sum = sum + n
+        n = n - 2
+    print(sum)
+#循环依次对list中的每个名字打印出Hello, xxx!：
+    L = ['Bart', 'Lisa', 'Adam']
+    for x in L:                #break and continue 用发和c一样
+        print("hello,%s!" % x)  #这里有要替换的字符的话需要占位符
+        # print('hello,%s!' % x)
+        print('Hello,', x, '!')  #这个写法更符合思维
+#
+n = 0
+    while n < 10:
+    n = n + 1
+    if n % 2 == 0: # 如果n是偶数，执行continue语句
+        continue # continue语句会直接继续下一轮循环，后续的print()语句不会执行
+    print(n)        #也就说满足if语句后continue之后的语句是不执行的
+写出一个死循环
+    i = 0
+    # i = i + 1
+    if i < 0:
+        print(i)
+    else:
+        print('erro')
+    列表   元组
+使用list和tuple 有序列表 :tumple 不可变 list 可变
+请用索引取出下面list的指定元素： Apple:Python: Lisa
+    L = [
+        ['Apple', 'Google', 'Microsoft'],
+        ['Java', 'Python', 'Ruby', 'PHP'],
+        ['Adam', 'Bart', 'Lisa']
+    ]
+    B = L[0]
+    print(B[0])
+    print(L[0][0],L[1][1],L[-1][-1])
+
+
+重要的判断语句 当if的条件满足时就会跳过其他的elif 和 else 。
+    if的完整结构:        |
+    if <条件判断1>:      |
+        <执行1>         |
+    elif <条件判断2>:
+        <执行2>
+    elif <条件判断3>:
+        <执行3>
+    else:
+        <执行4>
+############
+    age = 20
+    if age >= 6:
+        print('teenager')
+    elif age >= 18:
+        print('adult')
+    else:
+        print('kid')
+
+18.10. 27.
+eg
+小明身高1.75，体重80.5kg。请根据BMI公式（体重除以身高的平方）帮小明计算他的BMI指数，并根据BMI指数：
+    #
+    # 低于18.5：过轻
+    # 18.5-25：正常
+    # 25-28：过重
+    # 28-32：肥胖
+    # 高于32：严重肥胖
+    # 用if-elif判断并打印结果：
+    H = 1.75
+    W = 80.5
+    #BMI = W/pow(H,2) #平方的写法
+    BMI = W/(H*H)
+    BMI
+    print('BMI=%.1f' % BMI)
+    if BMI<=18.5:
+        print('过轻')
+    elif 18.5<BMI<=25:
+        print('正常')
+    elif 25<BMI<28:
+        print('过重')
+    elif 28<BMI<=32:
+        print('肥胖')
+    else :
+        print('严重肥胖')
+################for 循环##############
+Python的循环有两种，一种是for...in循环，依次把list或tuple中的每个元素迭代出来，看例子：
+    eg
+    sum = 0
+    for x in range(101): #range 函数 产生一定范围的数字
+        sum = sum + x
+    print(sum)
+第二种循环是while循环，只要条件满足，就不断循环，条件不满足时退出循环。比如我们要计算100以内所有奇数之和，可以用while循环实现
+    eg
+    sum = 0
+    n = 100
+    while n > 0:
+        sum = sum + n
+        n = n - 1
+    print(sum)
+请利用循环依次对list中的每个名字打印出Hello, xxx!：
+    L = ['Bart', 'Lisa', 'Adam']
+    for B in L :
+        # print('Hello,',B,'!')
+        print("Hello, %s!" % B) ##这里是 %s作为占位符 之后将%s 替换成 B
+
+循环是让计算机做重复任务的有效的方法。
+
+break语句可以在循环过程中直接退出循环，而continue语句可以提前结束本轮循环，并直接开始下一轮循环。这两个语句通常都必须配合if语句使用。
+
+要特别注意，不要滥用break和continue语句。break和continue会造成代码执行逻辑分叉过多，容易出错。大多数循环并不需要用到break和continue语句，上面的两个例子，都可以通过改写循环条件或者修改循环逻辑，去掉break和continue语句。
+eg:
+    L = ['Bart', 'Lisa', 'Adam']
+    for B in L :
+    # print('Hello,',B,'!')
+    # print('HELLO,',B,'!')
+     print("Hello, %s!" % B)
+    END
+
+    dict and set
+
+    import numpy as np
+    import matplotlib.pyplot as plt
+    t = np.arange(0, 4., 0.1)
+    plt.plot(t, t, t, t+2, t, t**2)
+
+19.3.11
+# # #print(name,age,where)
+     nu = int(input('输入数字：'))
+     if nu == 1:#　如果要对比　ｓｔｒ类型的数据　要加‘’　eg:　if nu == 'a':　　
+         print(nu)
+     elif nu == 2:
+         print(nu)
+     elif nu == 3:
+         print(nu)
+      else:
+          print('null')
+    who = str(input('人物：'))
+    if who == '糖糖':
+        print('YES%s属于西游记' %who)
+    elif who == '空空':
+        print('YES%s属于西游记' %who)
+    elif who == '沙沙':
+        print('YES%s属于西游记' %who)
+    else:
+        print('不属于西游记')
+
+########list 列表 写法####################
+
+    who = str(input('人物：'))
+    L = ['糖糖','空空','沙沙']
+    if who in L :
+       print('YES%s属于西游记' %who)
+    else:
+       print('不属于西游记')
+    输入数据 一判断是否复合 list 中的规则
+    who = str(input('name:'))print
+    L = ['ceng','zeng','guo']
+    if who in L :
+            print('YES%sshuyu' %who)
+    else:
+        print('not')
+    print('test')
+pythen 由c编写 python可以运行在任何c编译器的平台上
+格式字符必须写在引号中,单双引号没有区别, 数字可以直接写出不需要引号
+语句在同一行需要,号进行分隔
+ctrl + / 可以快速注释和取消注释
+sep='' 指定分隔符
+print('hello'+'world') + 可以取消输出是字符间显示的空格
+str 转换字符
+int 转换为整形
+
+不添加'' 表示调用变量或者函数
+
+
+print('hello',132,'world', sep='_')
+input('') 可以通过 input 获取键盘输入,('字符串') 表示显示的提示信息
+    n = input('name:')
+
+    print(n + 1 )
+这里执行会报错
+
+通过 INPUT 读取的字符都是字符类型,字符和数字是不能进行四则运算的
+    n = input('name:')
+
+    print(int(n) + 1 )
+而这里不会
+
+
+编写一个输入用户名,输入正确后,显示欢迎
+
+        un = input('username:')
+        up = input('userpass:')
+        if un == 'gaoyuan':
+            if up == 'gaoyuan':
+                print('wellcome',un)
+            else:
+                print('erro')
+        else:
+                print('erro')
+变量名称首字符只能是字母或下划线
+其他字符可以为字母数字下划线
+区分大小写
+
+赋值运算自右向左运行
+    counter = 0
+    counter = counter + 1
+    counter += 1
+    counter *= 4
+    counter /= 2
+    counter -= 1
+
+###################运算符#################
+
+    >>>5 / 3
+    1.6666666666666667
+
+    >>>5 // 3
+    1
+    #取余运算 保留商和余数
+    >>>divmod(5,3)
+    (1, 2)
+
+
+##################比较运算#################
+
+字符串比较时,逐个字符进行比较,一旦出现结果就不再继续比较,按照ASSIC来比较
+
+    >>>'x' > 'a'
+    True
+    >>>'x' > 'z'
+    False
+
+python 支持连续比较
+相当于 20 > 10 and 10 < 15
+
+    >>> 20 > 15 < 10   不推荐这种写法容易出现歧义
+    False
+
+    >>> 20 > 15 and 15 < 10
+    False
+
+####################逻辑运算#####################
+
+    and   与
+    or    或
+    not   非
+
+###################数据类型#####################
+
+数字
+    int 整数
+    bool 布尔数
+        true = 1
+        false = 0
+
+    复数
+整数的表示
+    默认10 进制
+
+    0o 8 进制
+        0o45
+    0b 2 进制
+       0b11
+    0x 16 进制
+        0x0a
+字符串
+     >>> import os
+     >>> os.chmod("/home/student/HTML---temporal/example.html",0o755)  linux 权限是8进制
+
+
+
+
+    >>> name = 'tom'
+    >>> s1 = 22
+    >>> '%s is %s years old' % ('tom',s1)  格式化输出 %s 作为站位符
+    'tom is 22 years old'
+    >>> '%s is a dog' % 'tom'
+    'tom is a dog'
+三引号(三个连续的单引号/双引号)
+    >>>wordlist = '''gaoyuan
+    lis
+    dc
+    ch'''
+    >>>print(wordlist)
+    gaoyuan
+    lis
+    dc
+    ch
+
+字符串长度,以及字符串下标
+    >>> py_str = 'python'
+    >>> len(py_str)     #计算字符串长度
+        6
+    >>> py_str[0]      # 显示从左向右第一个字符
+        'p'
+    >>> py_str[1]
+        'y'
+    >>> py_str[-1]     #从右向左取第一个
+        'n'
+    >>> py_str[2:4]    #包含起始下标的字符,不包含结束下标的字符 2开始 4 结束
+        'th'
+    >>> py_str[2:]     #结束不写表示取到结尾
+        'thon'
+    >>> py_str[2:6]    #切片超出范围不报错,
+        'thon'
+    >>> py_str[:2]      # 开头不写取到开头
+        'py'
+    >>> py_str[::2]    #步长为2
+        'pto'
+
+    >>> py_str[::-1] #倒着取出来
+        'nohtyp'
+    >>> py_str[1:6:2]   # [sstart:end:steep]
+        'yhn'
+
+    列表成员关系判断
+    >>>'to' in py_str       #成员在 但是 不连续
+        False
+    >>> 'to' not in py_str  #
+        True
+    >>> 'th' in py_str
+        True
+
+    >>> aaa = 123
+    print(str('aaa'))
+        aaa
+    print(str(aaa))  #转换为字符
+        123
+    >>> print('a' * 30 )
+        输出三十个a
+
+
+    >>> alist = [10,20,30,'tom','jerry']
+    >>> alist[:-1]                        #取出第一个到倒数第二个
+            [10, 20, 30, 'tom']
+
+    >>> alist.append('bb')              #追加
+    >>> alist[2] = 200                  #修改
+    >>> alist
+            [10, 20, 200, 'tom', 'jerry', 'bb']
+    >>> alist + [1]                     #拼接,只能拼接类型相同的
+        [10, 20, 200, 'tom', 'jerry', 'bb', 1]
+        alist + 100 会失败
+
+    元祖
+    >>> a = (10,11)
+    >>> a
+        (10, 11)
+    >>> len(a)
+        2
+    >>> b = (12,) 单元素元祖,必须有逗号,否则不是元组,而是数字
+字典
+字典是无序的,所以不能像字符串那样取下标和切片。
+
+    >>> adict = {'name': 'tom', 'age': 22}  key:value 类型
+    >>> len(adict)
+        2
+    >>> 'tom' in adict
+    # 'tom'是字典的key吗?
+        False
+    >>> 'name' in adict
+        True
+    >>> adict['name']
+    # 字典通过key取出value
+        'tom'
+    # 字典的key不能重复,赋值时,key存在则修改val,key不存在则新增
+    >>> adict['age'] = 25
+    >>> adict
+        {'name': 'tom', 'age': 25}
+    >>> adict['email'] = 'tom@tedu.cn'   ##添加
+    >>> adict
+        {'name': 'tom', 'age': 25, 'email': 'tom@tedu.cn'}
+    >>>
+    >>>
+    >>>
+
+    数据类型分类
+        按存储模型
+            标量:字符串、数字
+            容器:列表、元组、字典
+        按更新模型
+            可变:列表、字典
+            不可变:字符串、元组、数字
+        按访问模型:
+            直接:数字  a = b = 10   # a 和 b 指向相同的内存地址,当a / b 修改时则指向不同的内存地址
+            顺序:字符串、列表、元组   # alist = blist 列表 指向相同的内存地址, 修改alist / blist 后 依然会指向同一个内存地址,即使alist和 blist 同时改变
+            映射:字典  key:vlaue
+
+    数据类型也可以作为判断条件
+        任何值为0的数字都是false
+        任何非空对象表true 空对象是false
+
+
+            if ' ':
+            print('space is true')
+
+            if  0.1:
+                print('none zero')
+
+            if -0.0:
+                print('0 is false ')
+
+            if ():
+                print('元组 is false')
+
+            if  {}:
+                print('字典 是为false')
+            if []:
+                print('list is false')
+
+            if [1,2]:
+                print('list is true')
+
+    三元表达式
+
+        a = 10
+        b = 20
+        s = a if a <= b else b
+        print(s)
+
+        和 是一个意思
+
+        a = 10
+        b = 20
+
+        if a <= b :
+            print(a)
+        else:
+            print(b)
+
+    使用 getpass 模块可以 不显示密码
+
+    import getpass
+    user = str(input('username:'))
+    userpass = getpass.getpass('pass:')
+
+    if user == 'tom'and userpass == '123':
+        print('\033[32;1m%s access\033[0m' % user)
+    else:
+        print('\033[31;1m%s noauth\033[0m' % user)
+
+
+    #使用int型比较str 类型会出错
+
+    scoure = int(input('你的成绩:'))
+    if  60 < scoure <= 70:
+        print('及格')
+    elif 70 < scoure <= 80:
+        print('可以')
+    elif 80 < scoure < 90:
+        print('good')
+    elif scoure >= 90:
+        print('nb')
+    else:
+        print('fail')
+
+    猜拳游戏
+
+    random  模块
+
+    import random 和 random.choice
+
+        import random
+        all_list = ['石头','拳头','布']
+        computer = random.choice(all_list)
+        play = input('你的选择/石头/拳头/布:')
+        print('play: %s,computer: %s' % (play,computer) )
+
+        if play == '拳头':
+            if computer == '拳头':
+                print('\033[32;1m平局\033[0m')
+            else:
+                print('\033[31;1m失败\033[0m')
+
+
+        elif play == '石头':
+            if computer == '石头':
+                print('\033[32;1m平局\033[0m')
+            elif computer == '拳头':
+                print('\033[31;1m赢了\033[0m')
+            else:
+                print('\033[31;1m赢了\033[0m')
+        else:
+            if computer == '石头':
+                print('\033[32;1失败\033[0m')
+            elif computer == '拳头':
+                print('\033[31;1m赢了\033[0m')
+            else:
+                print('\033[31;1m平局\033[0m')
+
+    改进版本
+        通过对win_list 列表的匹配来判断是否成功
+        import random
+
+        all_list = ['石头','拳头','布']
+        win_list = [['石头','拳头'],['石头','布'],['拳头','布']]   #前面是用户后面是电脑
+        prompt = '''0 石头
+        1 拳头
+        2 布
+        请选择'''
+        computer = random.choice(all_list)
+        ind = int(input(prompt))
+        play = all_list[ind]
+        print('play: %s,computer: %s' % (play,computer) )
+
+        if play == computer:
+
+            print('\033[32;1m平局\033[0m')
+
+        elif [play,computer] in win_list:  ##前面是用户后面是电脑 和 win_list对应
+                    print('\033[31;1m赢了\033[0m')
+
+        else:
+                    print('\033[32;1m失败\033[0m')
+
+    100以内求和
+
+        result = 0
+        counter = 1
+        while counter <= 100:
+            result += counter
+            counter += 1
+        print(result)
+
+while 循环 执行 循环次数未知的情况
+    循环条件为真循环一直执行
+
+    while 循环判断:
+        循环代码
+while 循环的else语句
+    while 循环判断:
+        循环代码
+    else:       ##循环的else 当break时不执行,否则执行
+        代码
+
+break / continue
+
+
+
+range函数
+    生成 整数
+
+    range(100) #起始从0 开始
+    range(1,100) #  range(start,end) 起始从1开始 结束数字100 不包含
+    range(1,100,5)  #5 为步长
+    list(range(10,0,-1))  # 步长为 负数表示从大到小
+    list(range(100))
+列表计算
+    >>> [10 +2 for i in range(1,10)]
+        [12, 12, 12, 12, 12, 12, 12, 12, 12]
+    >>> [10 + i for i in range(1,10)]
+        [11, 12, 13, 14, 15, 16, 17, 18, 19]
+    >>> [10 + i for i in range(1,11)]
+        [11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+    >>> [10 + i for i in range(1,11) if i % 2 == 1 ]
+        [11, 13, 15, 17, 19]
+
+
+
+    nums = []
+    for i in range(1,11):
+        if i % 2  == 1 :
+            nums.append(10 + i )
+
+
+
+读取文本文件
+     f = open('/tmp/fstab') #打开文件
+     data = f.read()      #默认读取全部文件
+     print(data)          #输出文件
+     data = f.read()      #再读一次文件  这时文件指针已经在文件末尾 所以不输出 任何
+     print(data)          #输出
+
+    data = f.read(4)   # 读文件的前4个字符
+    print(data)
+    data = f.readline() #读一行,里面写实数字表示读几个字符
+    print(data)
+
+    data = f.readlines() #读取整个文件,将文件转换为一个列表, 每行是列表的一项
+    print(data)
+
+#读取文件 for 循环方式
+    f = open('/tmp/passwd')
+    for i in f:
+        print(i,end='')
+    f = f.close()
+    print(f)
+
+以bytes方式读取文件
+
+读取任何文件都可以用bytes方式打开。读取文件内容时，
+如果是文本内容，将会以字符的形式显示，如果不能转成字符，将会直接显示16进制数。
+
+
+    f = open('/bin/ls','rb')  #r 表示读 b 表示字节
+    a = f.read()    #读取时python试图将内容转换成字符
+    print(a)
+
+写文本文件
+
+    f = open('/tmp/passwd','w')
+    f.write('hello word!\n')
+    f.flush()       #刷新会保存
+    f.writelines(['2nd line\n','3rd line\n'])
+    f.close()       #关闭文件也会保存
+    f = open('/tmp/passwd','rb')
+    print(f.read())
+
+with 语句
+    使用with 打开文件,with 语句结束后文件自动关闭
+    with open('/tmp/passwd') as f:
+        for line in f:
+            print(line,end='')
+
+
+移动指针   (了解 看看)
+    ```python
+    >>> f = open('/tmp/passwd', 'rb')
+    >>> f.tell()   # 返回文件指针位置，从文件开头到文件指针间的偏移量
+    0
+    >>> f.read(5)
+    b'hello'
+    >>> f.tell()
+    5
+    >>> f.seek(0, 0)   # 移动指针到文件开头
+    # seek第二个参数是相对位置，0表示开头，1表示当前位置，2表示结尾；第一个参数是偏移量
+    >>> f.seek(-6, 2)   # 移动指针到文件结尾前的第6个位置
+    >>> f.close()
+练习复制
+
+    ##模拟cp 操作 拷贝/bin/ls 到指定位置
+     参考day03 中的 cp_ls.py
+
+     写法1:
+        original_ls = open('/usr/bin/ls','rb')
+        target_ls = open('/home/student/ls','wb')
+        original_ls1 = original_ls.read()
+        print(original_ls)
+        target_ls.write(original_ls1)
+        original_ls.close()
+        target_ls.close()
+        t = open('/home/student/ls','rb')
+        print(t.read())
+
+
+     方法2:
+        f1 = open('/bin/ls', 'rb')
+        f2 = open('/tmp/ls', 'wb')
+
+        data = f1.read()
+        f2.write(data)
+
+        f1.close()
+        f2.close()
+        ```
+
+        以上代码存在的问题
+
+        - 尽量使用变量，不要直接使用'/bin/ls'这样的直接量
+        - 变量名应该有意义，f1和f2这样的名称没有意义
+        - 读取数据时，一次将全部内容读入，有可能数据量太大
+
+## 函数
+
+    给一段代码起个名。假如有一个功能，需要10行代码，而这个功能需要在5个地方重复使用。
+    可以将这些功能代码封装到函数中，以后需要用到这个功能，就调用函数。
+
+
+    def gen_fib(n):
+        fib = [0,1]
+        for i in range(n - 2):
+            fib.append(fib[-1] + fib[-2])
+
+        return fib
+    mylist = [5,8,10,7,13]
+    for i in mylist:
+        print(gen_fib(i))
+    a = int(input('leng:'))
+
+    result = gen_fib(a)
+
+    print(result)
+函数定义时，代码不会执行。调用函数时，函数内的代码才会执行。
+
+### 函数的返回值
+
+- 函数执行的结果，可以使用return进行返回
+- 如果函数没有return语句，默认返回None
+- 当函数遇到return语句时，函数将会返回结果，停止执行
+
+### 函数的参数
+
+- 函数需要处理的数据，一般是通过参数进行传递的
+- 定义函数时，参数值不确定，用一个名称进行占位，称作形式参数、形参
+- 函数调用时，将具体的数据传递给函数，这个具体的数据是实际使用的参数，称作实际参数、实参
+- 形参赋值给实参时，认为是变量赋值即可
+
+    形参
+    import sys
+    print(sys.argv) ##传递的字符形式
+
+ 参考 code/all_note/day03/cp_ls.py
+        import sys
+    def cp2(src_fname,dst_fname):
+        src_fobj = open(src_fname,'rb')
+        dst_fobj = open(dst_fname,'wb')
+        while 1:
+            data = src_fobj.read(4096)
+            if not data:
+                break
+            dst_fobj.write(data)
+        src_fobj.close()
+        dst_fobj.close()
+
+    cp2(sys.argv[1],sys.argv[2])
+
+
+
+
+
+练习: 使用函数取出指定字符串中的数字
+    def num(alist):
+        str = ''
+        for i in alist:
+            if i in '1234567980':
+                str += i
+        return str
+    s1 = 'asdfa1313546wadfaf13314'
+    a = num(s1)
+    print(a)
+练习: 使用函数取出指定字符串中第一个字符前的空格,将其他字符输出
+    def str(a):
+        for i in range(len(a)):
+            if i != ' ':
+                break
+
+        return a[i:]
+
+    s1 = '   hello world'
+    result = str(s1)
+    print(result)
+
+
+模块
+    什么是模块
+        所有的.py文件都属于模块
+        在python 中使用 import 导入模块
+        参考 nsd1903/day03/star.py
+
+    导入模块
+
+        直接导入
+            >>> import time
+            >>> time.strftime('%Y-%m-%d')
+            '2019-08-02'
+        导入模块的指定功能
+            >>> from random import randint, choice
+            >>> randint(1,100)
+            31
+
+        一次导入多个模块
+            >>> import os,sys
+        导入模块并起别名
+            >>> import getpass as gp
+            >>> gp.getpass()
+            Password:
+            '13'
+模块的特性
+
+    foo.py
+    print(__name__)
+    bar.py
+    import foo
+
+    [student@room9pc01 day03]$ python foo.py
+    __main__
+    [student@room9pc01 day03]$ python bar.py
+    foo
+
+    直接使用显现_main_
+    模块间接运行(调用)是模块名
+
+
+
+
+模块介绍
+    在如下网址查询 python 模块和用法
+        https://docs.python.org/3/
+
+    shutil 模块
+
+        主要实现复制,移动
+
+
+
+        ```python
+        import shutil
+
+        # 拷贝文件对象的方式，了解
+        f1 = open('/etc/passwd', 'rb')
+        f2 = open('/tmp/mima', 'wb')
+
+        shutil.copyfileobj(f1, f2)   #copy文件内容到另一个文件，可以copy指定大小的内容
+        f1.close()
+        f2.close()
+
+        # 直接拷贝文件
+        >>> shutil.copyfile('/etc/shadow', '/tmp/sd')
+        '/tmp/sd'
+
+        # 将文件拷贝到目标目录，或指定目标位置及名字，常用
+        >>> shutil.copy('/etc/hosts', '/tmp/')
+        '/tmp/hosts'
+        >>> shutil.copy('/etc/hosts', '/tmp/zhuji.txt')
+        '/tmp/zhuji.txt'
+
+        # copy2相当于是cp -p  ， 常用
+        >>> shutil.copy2('/etc/hosts', '/tmp/zhj')
+        '/tmp/zhj'
+
+        # cp -r /etc/security /tmp/anquan， 常用
+        >>> shutil.copytree('/etc/security', '/tmp/anquan')
+        '/tmp/anquan'
+
+        # mv /tmp/anquan /var/tmp/anquan
+        >>> shutil.move('/tmp/anquan', '/var/tmp/anquan')
+        '/var/tmp/anquan'
+
+        # chown
+        >>> shutil.chown('/tmp/mima', user='bob', group='bob')
+
+
+    subprocess模块
+
+        # 在shell环境中执行命令ls ~
+        >>> subprocess.run('ls ~', shell=True)
+        >>> result = subprocess.run('ls abcd', shell=True)
+        ls: 无法访问abcd: 没有那个文件或目录
+        >>> result.returncode
+        # returncode就是$?
+        2
+        # 将输出保存到stdout中,将错误保存到stderr中
+        >>> result = subprocess.run('id root; id john', shell=True, stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE)
+        >>> result.stdout
+        b'uid=0(root) gid=0(root) \xe7\xbb\x84=0(root)\n'
+        >>> result.stderr
+        b'id: john: no such user\n'
+
+序列对象
+
+    ```python
+    >>> list('abcd')    # 把字符串转成列表
+    ['a', 'b', 'c', 'd']
+    >>> list(range(1, 11))
+    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    >>> list((10, 20, 30))   # 把元组转成列表
+    [10, 20, 30]
+
+    >>> tuple('abcd')
+    ('a', 'b', 'c', 'd')
+    >>> tuple(range(1, 11))
+    (1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+    >>> tuple([10, 20, 30])  # 把列表转成元组
+    (10, 20, 30)
+
+    # 将各种对象转换成字符串
+    >>> str(100)
+    '100'
+    >>> str([10, 20, 30])
+    '[10, 20, 30]'
+    >>> str((100, 200, 300))
+    '(100, 200, 300)'
+
+    # 翻转函数
+    >>> reversed('abcd')
+    <reversed object at 0x7f8155118ba8>
+    >>> list(reversed('abcd'))
+    ['d', 'c', 'b', 'a']
+    >>> for ch in reversed('abcd'):
+    ...   print(ch)
+
+    >>> 'abcd'[::-1]   # 翻转
+    'dcba'
+
+    # 排序
+    >>> sorted('qwertyu')
+    ['e', 'q', 'r', 't', 'u', 'w', 'y']
+    >>> sorted([2, 343, 2, 23, 4545, 23, 532])
+    [2, 2, 23, 23, 343, 532, 4545]
+
+### 字符编码
+
+    - 计算机内部存储时，都是2进制的0和1
+    - 可以提前预定义好一串0/1的组合代表什么字符
+    - ASCII是美国信息交换标准代码的简称，用7位表示字符
+    - 欧洲主要采用Latin-1，即ISO-8859-1字符集，共8位
+    - 中国采用的是gbk / gb2313 / gb18030字符集
+    - ISO国际标准化组织制定了万国码Unicode，utf8是其中的一种编码方案，它采用变长的编码方案，如果是英文字符，直接用1个字节表示，如果是汉字，用三个字节表示。
+
+    ```python
+    >>> s1 = '中国'
+    >>> s1.encode()    # 默认使用utf8编码，显示中国的utf8编码
+    b'\xe4\xb8\xad\xe5\x9b\xbd'
+    >>> s1.encode('gbk')   # 明确指明使用的编码方案是gbk
+    b'\xd6\xd0\xb9\xfa'
+    ```
+字符串格式化
+    %s 字符 %d 转换为 10 进制
+    %f float 类型
+    %c 将数字转化为asicll 所对应的字符
+    %#o 转化为8 进制
+    >>> '%10s%10s' % ('tom', 20) ### 左对齐 占位符10字符宽度
+        '       tom        20'
+    >>> '%-10s%-10s' % ('tom', 20) ### 右对齐
+        'tom       20        '
+    >>> '%5.2f' % (1/3)  ## 5.2 占位符 共5 字符 小数点后2 位
+        ' 0.33'
+
+    >>> '%c' % 89  ##将数字 10 进制转化为asicll 所对应的字符
+        'Y'
+    >>> '%#o' % 10  ###转化为8 进制
+        '0o12'
+    >>> '%#x' % 5   ### 转化为16 进制
+         '0x5'
+    >>> '%010d' % 5  ## 共 10 个字符宽度不够0 补齐
+        '0000000005'
+
+python模块布局
+    #!/usr/local/bin/python
+    # 解释器
+    """文档字符串
+    这是出现在help中的部分"""
+    import string
+    # 模块导入
+    import time
+    all_chs = string.ascii_letters + digits
+    # 全局变量定义
+    debug = True
+    class MyClass:
+    # 类定义
+    pass
+    def func1():
+    # 函数定义
+    pass
+    if __name__ == '__main__':
+    mc = MyClass()
+    func1()
+
+# nsd1903_py01_day05
+
+列表
+
+```python
+>>> alist = [10, 5, 32, 1, 8, 20]
+>>> alist[0] = 100
+>>> alist[1:3] = [45, 88, 12, 24]
+>>> alist
+[100, 45, 88, 12, 24, 1, 8, 20]
+>>> alist[2:2]
+[]
+>>> alist[2:2] = [12, 8]
+>>> alist
+[100, 45, 12, 8, 88, 12, 24, 1, 8, 20]
+
+# 列表的方法
+>>> alist.append(12)   # 追加
+>>> alist.extend([55, 32, 1])   # 加入多项
+>>> alist.remove(8)   # 移除第一个8
+>>> alist.index(12)   # 返回第一个12的下标
+>>> alist.reverse()   # 翻转
+>>> blist = alist.copy()   # 将alist的值copy后，赋值给blist
+>>> alist.insert(2, 88)   # 在下标为2的位置插入88
+>>> alist.sort()   # 升序排列
+>>> alist.sort(reverse=True)   # 降序
+>>> alist.count(12)   # 统计12出现的次数
+>>> alist.pop()   # 将最后一项弹出
+>>> alist.pop(2)   # 弹出下标为2的项目
+```
+
+## 元组
+
+相当于是静态的列表。
+
+```python
+>>> atuple = (10, 20, 15)
+>>> atuple.count(10)   # 统计10出现的次数
+1
+>>> atuple.index(15)   # 获取15的下标
+2
+>>> a = (10)
+>>> type(a)
+<class 'int'>
+>>> a
+10
+>>> b = (10,)   # 单元素元组必须有逗号
+>>> type(b)
+<class 'tuple'>
+>>> len(b)
+1
+```
+
+### 练习：模拟栈结构
+
+1. 发呆。思考程序的运作方式
+
+```python
+(0) 压栈
+(1) 出栈
+(2) 查询
+(3) 退出
+请选择(0/1/2/3): 2
+[]
+(0) 压栈
+(1) 出栈
+(2) 查询
+(3) 退出
+请选择(0/1/2/3): 0
+数据: hello
+(0) 压栈
+(1) 出栈
+(2) 查询
+(3) 退出
+请选择(0/1/2/3): 0
+数据: world
+(0) 压栈
+(1) 出栈
+(2) 查询
+(3) 退出
+请选择(0/1/2/3): 2
+['hello', 'world']
+(0) 压栈
+(1) 出栈
+(2) 查询
+(3) 退出
+请选择(0/1/2/3): 1
+从栈中弹出: world
+(0) 压栈
+(1) 出栈
+(2) 查询
+(3) 退出
+请选择(0/1/2/3): 2
+['hello']
+(0) 压栈
+(1) 出栈
+(2) 查询
+(3) 退出
+请选择(0/1/2/3): 1
+从栈中弹出: hello
+(0) 压栈
+(1) 出栈
+(2) 查询
+(3) 退出
+请选择(0/1/2/3): 1
+空栈
+(0) 压栈
+(1) 出栈
+(2) 查询
+(3) 退出
+请选择(0/1/2/3): 3
+bye-bye
+```
+
+2. 思考程序有哪些功能，将功能定义成函数
+
+```python
+def push_it():
+
+
+def pop_it():
+
+def view_it():
+
+def show_menu():
+
+
+if __name__ == '__main__':
+    show_menu()
+```
+
+## 字典
+
+- 映射、可变、容器
+- 字典key不能重复
+- 为字典赋值时，key存在则修改，不存在则新建
+
+```python
+>>> dict(['ab', ['name', 'bob'], ('age', 20)])
+{'a': 'b', 'name': 'bob', 'age': 20}
+>>> dict([('name', 'tom'), ('age', 20), ('mail', 'tom@tedu.cn')])
+{'name': 'tom', 'age': 20, 'mail': 'tom@tedu.cn'}
+
+>>> {}.fromkeys(['tom', 'jerry', 'bob'], 20)
+{'tom': 20, 'jerry': 20, 'bob': 20}
+
+>>> info = dict([('name', 'tom'), ('age', 20), ('mail', 'tom@tedu.cn')])
+>>> info
+{'name': 'tom', 'age': 20, 'mail': 'tom@tedu.cn'}
+>>> for key in info:
+...   print(key, info[key])
+...
+name tom
+age 20
+mail tom@tedu.cn
+
+>>> '%(name)s is %(age)s years old' % info
+'tom is 20 years old'
+>>> '%s is %s years old' % (info['name'], info['age'])
+'tom is 20 years old'
+
+>>> info['age'] = 22
+>>> info['phone'] = '15012345678'  ## 添加键值对
+>>> info
+{'name': 'tom', 'age': 22, 'mail': 'tom@tedu.cn', 'phone': '15012345678'}
+>>> 'tom' in info
+False
+>>> 'name' in info   ### 判断key 是否在 字典中
+True
+>>> len(info) ##计算info 长度
+4
+
+```
+>>> info.keys() ##取出所有的key
+    dict_keys(['name', 'age', 'mail', 'phone'])
+>>> info.values() ##取出所有的values
+    dict_values(['tom', 20, 'tom@tedu.cn', '123456789'])
+>>> info.items() ##取出所以键值对
+    dict_items([('name', 'tom'), ('age', 20), ('mail', 'tom@tedu.cn'), ('phone', '123456789')])
+>>> list(info.items())  ###将键值对转化为列表
+    [('name', 'tom'), ('age', 20), ('mail', 'tom@tedu.cn'), ('phone', '123456789')]
+
+###常用
+>>> print(dict_name.get('key','default_text')) ##key找不到则返回设定好的值,找到就返回values
+
+>>> print(info.get('phaone','110')) ##key找不到phone 字段就返回 110
+
+集合
+集合是一个数学上的概念
+它由不同元素构成 不重复
+集合元素必须是不可变对象
+集合是无序的
+集合就像是一个无值的字典
+集合分成可变集合和不可变集合
+集合分成可变集合和不可变集合
+
+集合的key  必须是不可变的 但是 values 是可以变的
+    # 找不到key返回not found>>> frozenset('abc')
+    # 不可变集合,集合一旦创建,不能做增删改操作
+    frozenset({'b', 'a', 'c'})
+    >>> set(['tom', 'jerry', 'bob'])
+    {'jerry', 'tom', 'bob'}
+    >>> aset = set('abc')
+    >>> bset = set('bcd')
+    >>> aset
+    {'b', 'a', 'c'}
+    >>> bset
+    {'b', 'd', 'c'}
+    >>> aset & bset
+    # 交集,两个集合中都有的元素
+    {'b', 'c'}
+    >>> aset | bset
+    # 并集,两个集合中所有的元素
+    {'b', 'd', 'a', 'c'}
+    >>> aset - bset
+    # 差补,aset中有,bset中无
+    {'a'}
+    >>> bset - aset
+    {'d'}
+    >>> aset
+    {'b', 'a', 'c'}
+    >>> len(aset)
+    3
+    >>> 'a' in aset
+    True
+    >>> for ch in aset:
+    ...
+    print(ch)
+    >>> aset.add(10)
+    >>> aset.pop()
+    # 向集合中加入新项目
+    # 弹出任意一个元素
+    'b'
+    >>> aset.remove(10)
+    # 删除指定的元素
+    >>> aset.update(['tom', 'jerry', 'bob'])
+    >>> aset
+    {'tom', 'a', 'jerry', 'bob', 'c'}
+    >>> aset = set('abc')
+    >>> bset = set('bcd')
+    >>> aset.union(bset)
+    # aset | bset
+    {'b', 'd', 'a', 'c'}
+    >>> aset.intersection(bset)
+    # aset & bset
+    {'b', 'c'}
+    >>> aset.difference(bset)
+    # aset - bset
+    {'a'}
+    >>> cset = aset.union(bset)
+    >>> aset.issubset(cset)
+    # aset是cset的子集吗?
+    True
+    >>> cset.issuperset(aset)
+    # cset是aset的超集吗?
+    True
+    # 经常使用集合实现去重操作
+    >>> from random import randint>>> nums = [randint(1, 20) for i in range(20)]
+    >>> nums
+    [6, 12, 18, 19, 1, 1, 16, 15, 5, 6, 18, 19, 14, 11, 17, 13, 2, 5, 20, 16]
+    >>> result = []
+    >>> for i in nums:
+    ... if i not in result:
+    ... result.append(i)
+    >>> result
+    [6, 12, 18, 19, 1, 16, 15, 5, 14, 11, 17, 13, 2, 20]
+    >>> list(set(nums))
+    [1, 2, 5, 6, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+
+    url1.txt : 第一天用户访问过的url
+    url2.txt:第二天用户访问过的url
+    需求:找出第二天新的url
+    (nsd1903) [root@room8pc16 day05]# cp /etc/passwd /tmp/
+    (nsd1903) [root@room8pc16 day05]# cp /etc/passwd /tmp/mima
+    # 修改mima,使它与/tmp/passwd有所区别
+    >>> with open('/tmp/passwd') as f1:
+    ...
+    set1 = set(f1)
+    # set1中的元素是文件的每一行
+    >>> with open('/tmp/mima') as f2:
+    ...
+    set2 = set(f2)
+    >>> set2 - set1
+    {'how are you?\n', 'hello world\n'}
+    >>> with open('/tmp/result.txt', 'w') as f3:
+    ...
+    f3.writelines(set2 - set1)
+练习:
+模拟unix2dos程序
+windows系统把\r\n作为行结束标志
+非windows系统把\n作为行结束标志
+python l2w.py userdb.py =>生成新文件,已经具有windows的换行符
 
 
 

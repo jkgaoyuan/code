@@ -20,6 +20,8 @@
 ###形参写法
 ###在命令行下添加两个参数 在执行
 ## eg: python3 cp_ls.py /bin/cp /tmp/zhu
+
+### sys.argv 模块收集参数 sys.argv[0] 表示程序自己名称 sys.argv[1],sys.argv[2] 表示 后面接的两个参数
 import sys
 def cp2(src_fname,dst_fname):
     src_fobj = open(src_fname,'rb')
