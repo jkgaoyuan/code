@@ -1984,7 +1984,7 @@ range函数
     f = open('/tmp/passwd')
     for i in f:
         print(i,end='')
-    f = f.close()
+    f = f.close() ##关闭并保存文件
     print(f)
 
 以bytes方式读取文件

@@ -42,3 +42,5 @@ def menu():
 
 if __name__ == '__main__':
     menu()
+
+# the older i get ,the less i listen to what people say  and the more i look at what they do
