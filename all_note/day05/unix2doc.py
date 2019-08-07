@@ -20,3 +20,16 @@ def transfer(sfile,deflie):
                     f3.write(''.join(f2))  ###将list 转化为 str
 
 transfer(sys.argv[1],sys.argv[2])
+
+
+################老师的写法
+# import sys
+# def unix2doc(src, dst):
+#     with open(src) as src_fobj:
+#         with open(dst, 'w') as dst_fobj:
+#             for lien in src_fobj:
+#                 lien = lien.rsplit() + '\r\n'
+#                 dst_fobj.write(lien)
+#
+# if __name__ == '__main__':
+#     unix2doc(sys.argv[1],sys.argv[2])

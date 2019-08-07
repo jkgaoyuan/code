@@ -1,6 +1,10 @@
 stack = []
 def push_it():
-    alist = input('输入入栈内容:').strip()
+    try:
+        alist = input('输入入栈内容:').strip()
+    except (KeyboardInterrupt, EOFError):
+        print()
+        return
     if alist:
         stack.append(alist)
     else:
@@ -26,7 +30,10 @@ def show_menu():
         请输入 0 1 2 3
         '''
     while  True:
-        choice = input(prompt).strip()
+        try:
+            choice = input(prompt).strip()
+        except (KeyboardInterrupt, EOFError):
+            choice = '3'
         if choice not in ['0','1','2','3']:
             print('TYPE_ERRO TRY AGIN')
             continue
@@ -34,6 +41,6 @@ def show_menu():
         if choice == '3':
             print('baby')
             break
-        cmds[choice]()  ####调用选项
+        cmds[choice]()
 if __name__ == '__main__':
     show_menu()
