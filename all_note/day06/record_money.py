@@ -12,7 +12,7 @@ def inconme(fname):
     with open(fname, 'rb') as fobj:
         records = pickle.load(fobj)         ##将读出的fobj 赋值给records
     #计算最新余额
-    balance= records[-1][-2] + getmoney     #### 这里的records 相当于一个多远数组 -1 -2 则 分别为 数组的下标 i和j/ i行j列
+    balance= records[-1][-2] + getmoney     #### 这里的records 相当于一个多远数组 -1 -2 则 分别为 数组的下标 i和j/ i行j列,,, 而我们知道 -1表示倒数第一 -2 表示到时第二
     #更新列表
     records.append([gettime, getmoney, 0, balance, getcomment])
     #把列表回写到文件
