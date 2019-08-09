@@ -61,13 +61,16 @@
 #
 # print(add(**mydict))    ##相当于 a + b
 
+
+#######随机加减法 错误三次输出正确的答案
+#####
 from random import randint, choice
 def exam():
-    cmds = {'+': lambda x, y: x + y, '-':lambda x,y:x - y}
-    nums = [randint(1,100) for i in range(2)]
-    nums = nums.sort(reverse=True)
+    cmds = {'+': lambda x, y: x + y, '-': lambda x, y: x - y}
+    nums = [randint(1, 100) for i in range(2)]
+    nums.sort(reverse=True)
     op = choice('+-')
-    result = cmds[op](*nums)
+    result = cmds[op](*nums)  ####*号,表示把序列或字典拆开
     prompt = '%s %s %s =' % (nums[0], op, nums[1])
     counter = 0
     while counter < 3:
@@ -95,7 +98,39 @@ def main():
             yn = 'n'
 
         if yn  in 'nN':
-            print('\nbaby')
+            print('baby')
             break
 if __name__ == '__main__':
     main()
+
+
+
+#
+# from random import randint, choice
+#
+# def exam():
+#     cmds = {'+': lambda x, y : x + y, '-':lambda x, y: x - y}
+#     nums = [randint(1,100) for i in range(2)]
+#     nums.sort(reverse=True)
+#     op =  choice('+-')
+#     result = cmds[op](*nums)
+#     print('%s %s %s' %(nums[0], op, nums[-1]))
+#     counter = 0
+#     while counter < 3:
+#         answer = int(input('you answer:'))
+#         if answer == result:
+#             print('yes')
+#         print('no')
+#         counter +=1
+#     else:
+#         print('%s' % answer)
+# def main():
+#     while True:
+#         exam()
+#         yn = input('yes/no').strip()[0]
+#         if yn in 'nN':
+#             print('baby')
+#             break
+# if __name__ == '__main__':
+#     main()
+#
