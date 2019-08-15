@@ -1,0 +1,55 @@
+#老师的版本
+---
+- name: configure webservers
+  hosts: webservers
+  tasks:
+    - name: install web pkgs
+      yum:
+        name: [httpd, php, php-mysql]
+        state: present
+        #state: present 不限制安装版本 latest 表示 安装最新版本
+    - name: enable web service
+      service:
+        name: httpd
+        state: started
+        enabled: yes
+
+- name: configure dbservers
+  hosts: dbservers
+  tasks:
+    - name: install db pkgs
+      yum:
+        name: mariadb-server
+        state: latest
+    - name: enable db service
+      service:
+        name: mariadb
+        state: started
+        enabled: yes
+##自己仿照老师写的 -
+#---
+#- name: install and restart mariadb httpd php-fpm php-mysql
+#  hosts: webservers
+#  tasks:
+#    - name: install web pkgs
+#      yum:
+#        name: [httpd, php, php-mysql]
+#        #state: present 不限制安装版本 latest 表示 安装最新版本
+#        state: latest
+#    - name: enable web service
+#      service:
+#        name: httpd
+#        state: started
+#        enabled: yes
+#- name: install and restart mariadb
+#  hosts: dbservers
+#  tasks:
+#    - name: install db pkgs
+#      yum:
+#        name: mariadb-server
+#        state: latest
+#    - name: enable db server
+#      service:
+#        name: mariadb
+#        state: started
+#        enabled: yes
