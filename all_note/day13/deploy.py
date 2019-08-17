@@ -66,8 +66,8 @@ def deploy(app_fname, deploy_dir):
 
 if __name__ == '__main__':
     # 如果未发现新版本，则退出
-    deploy_dir = '/var/www/deploy'
-    download_dir = '/var/www/download'
+    deploy_dir = '/var/www/deploy'          ###项目解压路径, 又该目录 产生软连接到 网站根目录, 版本切换只需要更换软连接就好了
+    download_dir = '/var/www/download'      ###将Jenkins项目下载到该目录,wget 错误请确认该,目录是否存在
     ver_url = 'http://192.168.1.50/deploy/live_ver'  ## Jenkins当前使用 库地址
     ver_fname = os.path.join(deploy_dir, 'live_ver')
     if not has_new_ver(ver_url, ver_fname):
@@ -79,6 +79,7 @@ if __name__ == '__main__':
     ver = r.text.strip()   # 取出版本号
     app_url = 'http://192.168.1.50/deploy/pkgs/myblog-%s.tar.gz' % ver  ###Jenkins 项目地址
     wget.download(app_url, download_dir)
+    #              下载地址,保存地址
 
     # 检查软件是否损坏，损坏则删除软件包并退出
     md5_url = app_url + '.md5'
