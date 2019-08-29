@@ -4117,7 +4117,9 @@ Port 2022
 
 ```shell
 [root@node6 ~]# docker run -d -h gitlab --name gitlab -p 443:443 -p 80:80 -p 22:22 --restart always -v /srv/gitlab/config:/etc/gitlab -v /srv/gitlab/logs:/var/log/gitlab -v /srv/gitlab/data:/var/opt/gitlab gitlab_zh:latest
-
+-v 将本地文件和docker 文件 共享
+--name 指定docker 容器启动后的 名字, 若没有则docker 生成一个
+-h 指定镜像
 # gitlab容器需要的资源比较多，所以需要较长的启动时间
 [root@node6 ~]# docker ps   # 状态显示为healthy时才可用，需要等几分钟
 ```
