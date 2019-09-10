@@ -3829,6 +3829,20 @@ int main(void){
 # gcc -o hello hello.c
 # ./hello
 ```
+jenkins pipeline
+ Jenkins Pipeline是一套插件，支持将连续输送Pipeline实施和整合到Jenkins。
+            Pipeline提供了一组可扩展的工具，用于通过PipelineDSL为代码创建简单到复杂的传送Pipeline。
+            对于单个项目来说，使用这样的Pipeline来构建能够满足绝大部分需求，但是这样做也有很多缺陷，包括： 
+            多个项目的Pipeline打包脚本不能公用，导致一个项目写一份脚本，维护比较麻烦。
+            Jenkins提供了一个更优雅的管理Pipeline脚本的方式，在配置项目Pipeline的时候，选择Pipeline script from SCM。
+            这样，Jenkins在启动job的时候，首先会去仓库里面拉取脚本，然后再运行这个脚本。
+            在脚本里面，我们规定的构建方式和流程，就会按部就班地执行。
+
+https://blog.csdn.net/wh211212/article/details/77482138        Jenkins + Pipeline 构建流水线发布
+https://blog.csdn.net/baidu_30310941/article/details/81661816  Jenkins Pipeline+Docker实现流水线自动化构建
+https://www.jianshu.com/p/b524b151d35f                         Jenkins使用简易教程
+
+
 
 ```mermaid
 graph LR
@@ -3836,6 +3850,7 @@ dev(程序员)--推送-->git(git server)
 ci(jenkins)--拉取-->git
 app(应用服务器)--拉取-->ci
 ```
+rpm -qa | grep mariadb
 
 主机规划：
 
