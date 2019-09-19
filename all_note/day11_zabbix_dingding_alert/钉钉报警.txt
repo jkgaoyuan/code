@@ -1,0 +1,74 @@
+#########################################################
+思路 :
+ 1. 创建 监控主机
+ 2. 创建 监控模板
+ 3. 创建 监控项目和触发器
+     这个自定义监控项目和报警脚本 结合 由设定好的自定义监控项目，检测到报警信息，
+     然后zabbix发出警报，报警动作执行 python的报警脚本，将信息发送给钉钉机器人
+            ##################################################################
+            监控磁盘性能 （io ，io操作花费时间 ，读写时间  ）
+            讲述了原理
+            通过
+            https://blog.csdn.net/qq_37960324/article/details/82186600
+            ##################################################################
+     创建 触发器 https://blog.csdn.net/xundh/article/details/71439152
+ 4. 创建报警脚本，手动测试报警脚本，创建报警媒介，添加用户，添加报警动作
+      https://www.jianshu.com/p/6317121da5a4
+      查看　zabbix key的参数请在zabbix 官网查看
+      https://www.zabbix.com/documentation/3.0/manual/config/items/itemtypes/zabbix_agent
+
+老师的简书zabbix报警https://www.jianshu.com/p/6317121da5a4
+
+########钉钉报警，监控磁盘容量
+###########################################
+监控 磁盘剩余 容量 并报警 (我简历上面写的 重点看看)
+可以参考
+创建一个带有参数的监控项
+    带有参数的监控项 http://www.zsythink.net/archives/670
+    钉钉机器人报警  https://blog.51cto.com/lingxudong/2389670
+    和上面检测 磁盘 性能 相同 这里 创建监控 项 填写的内容不同 最后需要在添加模板中添加触发器来限制报警条件.
+    别忘记了 开启
+
+    cat /usr/local/zabbix/etc/zabbix_server.conf|grep AlertScriptsPath
+    //查询监控脚本存放位置
+    AlertScriptsPath=/usr/local/zabbix/monitor_scripts
+    Chmod zabbix.zabbix /url/dingalert.py
+    Chown +x /url/dingalert.py
+
+   在检测 磁盘 剩余容量的	使用的 key 值
+    vfs.fs.size[/,pused]  使用 zabbix_get 测试
+路径,free/total/pused
+需要注意的是 free/total 返回的值是整数 返回百分比 是浮点
+在创建监控项目的时候需要注意 信息类型 选项
+如果返回的是字节则是整数，如果返回的是百分比则是浮点。
+但是出现了一个问题 :
+检测磁盘容量少于设定的百分百时 可以产生报警信息 但是钉钉报警动作执行失败,初步推测 报警脚本要求 的数据类型和产生的数据类型不符
+###################################################
+
+参考 磁盘监控 io 磁盘性能
+#########################################
+    原理：监控磁盘性能 （io ，io操作花费时间 ，读写时间 等等 ）
+    https://blog.csdn.net/qq_37960324/article/details/82186600
+    https://www.cnblogs.com/w787815/p/7261091.html
+在zabbix_agentd.conf 中开启
+UnsafeUserParameters=1
+Include=/usr/local/zabbix/etc/zabbix_agentd.conf.d/
+将自定义key 写入 vim /usr/local/zabbix/etc/zabbix_agentd.conf.d/userparameter_io.conf
+文件
+重启 zabbix_agentd 服务
+使用 zabbix_get -s 127.0.0.1 -p 10050 -k disk.read.ops[vda1]  测试
+
+被动监控
+思路:
+1.创建 模板 创建应用集 添加监控项目 创建图形化(不然看不见)
+2.创建 监控主机 添加 被监控主机的ip和zabbix_agentd端口
+        查看值 选择不变 / (as is)
+        注意key (键值)有可能无法显示,需要 手动输入
+        eg: disk.read.ops[vda1] 命令+参数
+ 创建图形化界面
+ 添加完成后创建主机 链接模板 若一切没问题就可以查看磁盘io
+3. 创建 触发器 用来报警
+    https://blog.csdn.net/xundh/article/details/71439152
+
+
+####################################################################
